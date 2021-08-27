@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 
 
 def hello(request):
-    return HttpResponse('hello myadmin')
+    return redirect('/login') #http://127.0.0.1:8000/访问直接跳转到登录页面
 
 def login(request):
     '''
