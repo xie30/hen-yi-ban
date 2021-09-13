@@ -3,31 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
-    <link rel="stylesheet" href="./static/css/login.css">
+    <link rel="stylesheet" href="/static/css/login.css">
 </head>
 <body>
-<form action="/login/" method="POST">
-    {% csrf_token %} <!--不加上这个的话会被后台自动拦截-->
-    <div class="login-pi">
-        <div class="username">
-            <p>用户名</p>
-            <input type="text" id="user" name="username"> <!--没有name的属性的话，后台没有对于字段 -->
+<div class="login-contain">
+    <div class="form-login">
+        <form action="/login/" method="POST">
+        {% csrf_token %}
+        <div class="login-pi">
+            <div class="username">
+                <p>用户名</p>
+                <input type="text" id="user" name="username"> <!--没有name的属性的话，后台没有对于字段 -->
+            </div>
+            <div class="passwd">
+                <p>密码</p>
+                <input type="text" id="pass" name="password"><br>
+            </div>
+            <div class="login-but">
+                <input type="submit" value="立即登录">
+            </div>
+            <div class="register">
+                <a href="/register/"> 立即注册 </a>
+            </div>
+            <div class="forget-pw">
+                <a href=""> 忘记密码 </a>
+            </div>
         </div>
-        <div class="passwd">
-            <p>密码</p>
-            <input type="text" id="pass" name="password"><br>
-        </div>
-        <div class="login-but">
-            <input type="submit" value="立即登录">
-        </div>
-        <div class="register">
-            <a href="/register/"> 立即注册 </a>
-        </div>
-        <div class="forget-pw">
-            <a href=""> 忘记密码 </a>
-        </div>
+        </form>
     </div>
-</form>
+</div>
+
+
 
 </body>
 </html>

@@ -1,1 +1,31 @@
 /*flex布局*/
+
+/*
+1.登录页面设置一张铺满的背景图+公司logo
+2.注册登录元素居中
+3.链接下户线取消
+4.调整距离
+*/
+
+/*css设置背景图片，body */
+html,body{
+    /*height: 100%;*/
+    height: 100vh; /* 这个填充是以屏幕为参考*/
+}
+body{
+    background-image:url("12.jpg");
+    background-repeat:no-repeat;
+    /*background-size:100% 100%;*/
+    background-size: cover;
+}
+/*div居中*/
+.login-contain{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100%; /*以父容器为参考*/
+    /*height:100vh; !*以父容器为参考*!*/
+}
+
+/*调整内部输入框，标签的位置*/
+

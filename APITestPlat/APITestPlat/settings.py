@@ -128,3 +128,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+#必须添加下面的路径，不然静态文件再实际访问404：/static/image/earth.jpg
+STATICFILES_DIRS = [
+     os.path.join(BASE_DIR, "static")
+]
+
