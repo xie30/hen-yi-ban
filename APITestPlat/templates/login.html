@@ -12,16 +12,16 @@
         {% csrf_token %}
         <div class="login-pi">
             <div class="username">
-                <p>用户名</p>
-                <input type="text" id="user" name="username"> <!--没有name的属性的话，后台没有对于字段 -->
+                <input type="text" id="user" name="username" placeholder="用户名/邮箱"> <!--没有name的属性的话，后台没有对于字段 -->
             </div>
             <div class="passwd">
-                <p>密码</p>
-                <input type="text" id="pass" name="password"><br>
+                <input type="text" id="pass" name="password" placeholder="密码"><br>
             </div>
             <div class="login-but">
-                <input type="submit" value="立即登录">
+                <input type="submit" value="登录">
             </div>
+        </div>
+        <div class="re-for">
             <div class="register">
                 <a href="/register/"> 立即注册 </a>
             </div>
