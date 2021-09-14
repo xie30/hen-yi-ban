@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>登录</title>
     <link rel="stylesheet" href="/static/css/login.css">
+    <link rel="stylesheet" href="/static/css/base.css">
 </head>
 <body>
 <div class="login-contain">
@@ -12,7 +13,8 @@
         {% csrf_token %}
         <div class="login-pi">
             <div class="username">
-                <input type="text" id="user" name="username" placeholder="用户名/邮箱"> <!--没有name的属性的话，后台没有对于字段 -->
+                <i class="iconfont">&#xe70a;</i>
+                <input type="text" id="user" name="username" placeholder="用户名/邮箱" > <!--没有name的属性的话，后台没有对于字段 -->
             </div>
             <div class="passwd">
                 <input type="text" id="pass" name="password" placeholder="密码"><br>

@@ -5,6 +5,10 @@
 2.注册登录元素居中
 3.链接下户线取消
 4.调整距离
+5.用户名和密码icon，密码加入眼睛按钮，点击显示密码和隐藏密码
+    5-1.用直接引用图片的方式
+    5-2.用框架
+6.账号密码异常的提示处理
 */
 
 /*css设置背景图片，body */
@@ -12,16 +16,15 @@ html,body{
     /*height: 100%;*/
     height: 100vh; /* 这个填充是以屏幕为参考*/
 }
-
-*{
-    text-decoration: none;
-}
-
 body{
-    background-image:url("12.jpg");
+    background-image:url("img/background.jpg");
     background-repeat:no-repeat;
     /*background-size:100% 100%;*/
     background-size: cover;
+}
+/* 链接去除下划线 */
+*{
+    text-decoration: none;
 }
 /*div居中*/
 .login-contain{
@@ -37,6 +40,7 @@ body{
     height:35px;
     margin: 10px;
 }
+
 .login-but{
     display: flex;
     justify-content: center;
@@ -49,7 +53,6 @@ body{
     background-color: #0066ff;
     border: 0 solid #000000; /*去掉按钮背景阴*/
 }
-
 /* 立即注册 忘记密码 内联*/
 .re-for{
     text-align: center;
