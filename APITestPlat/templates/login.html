@@ -19,19 +19,16 @@
                         <input type="text" id="user" name="username" placeholder="用户名/邮箱" > <!--没有name的属性的话，后台没有对于字段 -->
                     </div>
                 </div>
-
             </div>
             <div class="password">
                 <div class="icon-input">
                     <i class="iconfont">&#xe60f;</i>
                     <div class="passwd">
-                        <input type="text" id="pass" name="password" placeholder="密码"><br>
+                        <input type="password" id="pass" name="password" placeholder="密码"><br>
                     </div>
-                    <div class="show-passwd">
-                        <i class="iconfont">&#xe615;</i>
-                    </div>
-                    <div class="hide-passwd">
-                        <i class="iconfont">&#xe676;</i>
+                    <div class="hide-show">
+                        <i class="show-pass">&#xe615;</i>
+                        <i class="hide-pass">&#xe676;</i>
                     </div>
                 </div>
 
@@ -52,8 +49,24 @@
         </form>
     </div>
 </div>
-
-
-
+<script src="/static/js/jquery/jquery-3.6.0.min.js"></script>
+<script>
+    $(".hide-show").click(function (e) {
+        console.log(e.target)
+        console.log($("i[class='hide-pass']" )[0])
+        //event.target 触发该事件的 DOM 元素
+        if (event.target === $("i[class='hide-pass']")[0] )
+        {
+            $(".show-pass").css("display","block")
+            $(".hide-pass").css("display","none")
+            $(".passwd input").prop("type","text")
+        }
+        else {
+            $(".show-pass").css("display","none")
+            $(".hide-pass").css("display","block")
+            $(".passwd input").prop("type","password")
+        }
+    })
+</script>
 </body>
 </html>

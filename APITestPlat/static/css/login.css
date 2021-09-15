@@ -8,7 +8,7 @@
 5.用户名和密码icon，密码加入眼睛按钮，点击显示密码和隐藏密码
     5-1.用直接引用图片的方式
     5-2.用框架
-6.账号密码异常的提示处理
+6.账号密码异常的提示处理（未做）
 */
 
 /*css设置背景图片，body */
@@ -43,11 +43,11 @@ body{
     width: 328px;
     margin: 10px;
 }
-.show-passwd{
+.show-pass{
     display:none;
     cursor: pointer;/*光标呈现为指示链接的指针（一只手）*/
 }
-.hide-passwd{
+.hide-pass{
     cursor: pointer;
 }
 /*调整各控件之间的间距*/
@@ -70,7 +70,6 @@ body{
     background-color: #0066ff;
     border: 0 solid #000000; /*去掉按钮背景阴*/
 }
-
 
 /* 立即注册 忘记密码 内联*/
 .re-for{
