@@ -12,6 +12,11 @@
 */
 
 /*css设置背景图片，body */
+*{
+    margin: 0;
+    padding: 0;
+}
+
 html,body{
     /*height: 100%;*/
     height: 100vh; /* 这个填充是以屏幕为参考*/

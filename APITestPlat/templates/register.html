@@ -3,37 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>注册</title>
+    <link rel="stylesheet" href="/static/css/register.css">
 </head>
 <body>
-<form action="/register/" method="post">
-    {% csrf_token %} <!--不加上这个的话会被后台自动拦截-->
-    <div class="user-register">
-        <div class="user-info">
-            <div class="welcome-reg">
-                <h1>欢迎注册</h1>
-                <p>
-                    已有账号？
-                    <span class="login-but">登录</span>
-                </p>
-            </div>
-            <div class="username">
-                <span>用户名</span>
-                <input type="text" id="user" name="username"> <!--没有name的属性的话，后台没有对于字段 -->
-            </div>
-            <div class="user-pass">
-                <span>密码</span>
-                <input type="text" id="pass" name="password"><br>
-            </div>
-            <div class="user-email">
-                <span>邮箱地址</span>
-                <input type="text" id="email" name="email"><br>
-            </div>
+<div class="reg-form">
+    <div class="user-reg-info">
+        <div class="user-register">
+        <div class="welcome-reg">
+            <h1>欢迎注册</h1>
+            <p>
+                已有账号？
+                <span class="login-but">登录</span>
+            </p>
         </div>
-         <div class="reg-but">
-             <input type="submit" value="注册">
-         </div>
+        <div class="user-info">
+            <form action="/register/" method="post">
+                {% csrf_token %} <!--不加上这个的话会被后台自动拦截-->
+                <div class="username">
+                    <label>用户名</label>
+                    <input type="text" id="user" name="username"> <!--没有name的属性的话，后台没有对于字段 -->
+                </div>
+                <div class="user-pass">
+                    <label>密&nbsp&nbsp&nbsp码</label>
+                    <input type="text" id="pass" name="password"><br>
+                </div>
+                <div class="user-email">
+                    <label>邮&nbsp&nbsp&nbsp箱</label>
+                    <input type="text" id="email" name="email"><br>
+                </div>
+                <div class="reg-but">
+                    <input type="submit" value="注册">
+                </div>
+            </form>
+        </div>
     </div>
-
-</form>
+    </div>
+</div>
+<script src="/static/js/jquery/jquery-3.6.0.min.js"></script>
+<script>
+    var log_but = $(".welcome-reg span")
+    console.log(log_but)
+    log_but.click(function () {
+        console.log("登录页")
+        window.location.href="/login"
+    })
+</script>
 </body>
 </html>
