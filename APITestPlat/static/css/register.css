@@ -71,6 +71,12 @@
     margin-right: 10px;
     margin-bottom: 32px;
 }
+.wrong-tips{
+    color: red;
+    font-size: 14px;
+    padding-left: 66px;
+
+}
 .reg-but input{
     background-color: #BDCEFC;
     border-radius: 25px;

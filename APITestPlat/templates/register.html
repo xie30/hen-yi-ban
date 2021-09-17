@@ -31,6 +31,10 @@
                     <label>邮&nbsp&nbsp&nbsp箱</label>
                     <input type="text" id="email" name="email"><br>
                 </div>
+                <p class="wrong-tips">
+                    {{ user_form.username }}
+                    {{ msg }}
+                </p>
                 <div class="reg-but">
                     <input type="submit" value="注册">
                 </div>
