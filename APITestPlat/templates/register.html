@@ -21,18 +21,18 @@
                 {% csrf_token %} <!--不加上这个的话会被后台自动拦截-->
                 <div class="username">
                     <label>用户名</label>
-                    <input type="text" id="user" name="username"> <!--没有name的属性的话，后台没有对于字段 -->
+                    <input type="text" id="user" name="username" value="{{ user_register.username }}" required="required"> <!--没有name的属性的话，后台没有对于字段 -->
                 </div>
                 <div class="user-pass">
                     <label>密&nbsp&nbsp&nbsp码</label>
-                    <input type="text" id="pass" name="password"><br>
+                    <input type="text" id="pass" name="password" value="{{ user_register.password }}" required="required"><br>
                 </div>
                 <div class="user-email">
                     <label>邮&nbsp&nbsp&nbsp箱</label>
-                    <input type="text" id="email" name="email"><br>
+                    <input type="email" id="email" name="email" value="{{ user_register.email }}" required="required"><br>
                 </div>
                 <p class="wrong-tips">
-                    {{ user_form.username }}
+                    {{ user_register.username }}
                     {{ msg }}
                 </p>
                 <div class="reg-but">
@@ -51,6 +51,13 @@
         console.log("登录页")
         window.location.href="/login"
     })
+    //用户重新获取焦点或者刷新页面后，取消tips
+    $(".username input,.user-pass input,.user-email input").focus(function () {
+        $(".wrong-tips").remove()
+    });
+    //刷新？？？
+
+    //怎样给个注册成功的提示然后就自动跳转到登录页面？
 </script>
 </body>
 </html>

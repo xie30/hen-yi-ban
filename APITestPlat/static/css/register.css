@@ -78,7 +78,8 @@
 
 }
 .reg-but input{
-    background-color: #BDCEFC;
+    background-color:#2E58FF;
     border-radius: 25px;
     width: 406px;
+    cursor: pointer;
 }
