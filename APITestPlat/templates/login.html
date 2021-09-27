@@ -9,7 +9,7 @@
 <body>
 <div class="login-contain">
     <div class="form-login">
-        <form action="/login/" method="POST">
+        <form action="{% url 'login' %}" method="POST">
         {% csrf_token %}
         <div class="login-pi">
             <div class="username">
@@ -42,7 +42,7 @@
         </div>
         <div class="re-for">
             <div class="register">
-                <a href="/register/"> 立即注册 </a>
+                <a href="{% url 'register' %}"> 立即注册 </a>
             </div>
             <div class="forget-pw">
                 <a href=""> 忘记密码 </a>

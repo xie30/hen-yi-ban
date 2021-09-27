@@ -17,7 +17,7 @@
             </p>
         </div>
         <div class="user-info">
-            <form action="/register/" method="post">
+            <form action="{% url "register" %}" method="post">
                 {% csrf_token %} <!--不加上这个的话会被后台自动拦截-->
                 <div class="username">
                     <label>用户名</label>
@@ -49,7 +49,7 @@
     console.log(log_but)
     log_but.click(function () {
         console.log("登录页")
-        window.location.href="/login"
+        window.location.href="{% url 'login' %}"
     })
     //用户重新获取焦点或者刷新页面后，取消tips
     $(".username input,.user-pass input,.user-email input").focus(function () {

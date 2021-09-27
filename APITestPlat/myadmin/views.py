@@ -8,10 +8,11 @@ from myadmin.models import UserFi
 # from django import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
 
 
 def hello(request):
-    return redirect('/login') #http://127.0.0.1:8000/访问直接跳转到登录页面
+    return redirect(reverse("login")) #http://127.0.0.1:8000/访问直接跳转到登录页面
 
 def home(request):
     return render(request, './templates/home.html')
@@ -43,7 +44,7 @@ def login(request):
             passw = user[0]["password"]
             if passw == login_user.password:
                 # print()
-                return redirect('/home') #直接域名 @login_required,主页要限制只有登录才能访问
+                return redirect(reverse("home")) #直接域名 @login_required,主页要限制只有登录才能访问
             else:
                 # print("请输入正确的用户名/密码")
                 return render(request,"templates/login.html",{"wrong_msg":msg,"info":user_form})
@@ -82,7 +83,8 @@ def register(request):
             # print('查询数据：')
             # print(UserFi.objects.all().values())
             # 怎样提示注册成功后跳转登录页面？
-            return HttpResponse('<h1>注册成功</h1> <a href="/login">登录</a>')
+            return HttpResponse("<h1>注册成功</h1> <a href='/login'>登录</a>")
+            # return HttpResponse("<h1>注册成功</h1> <a href={{ login }}>登录</a>")
             # return redirect('/login') #页面跳转了
 
     else:
