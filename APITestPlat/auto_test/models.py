@@ -15,27 +15,15 @@ class Projrct(models.Model):
     pass
 
 class CaseList(models.Model):
-
     '''
-    展示的用例列表
+    用例
     '''
-    #用例id---》主键、自动创建
-    id = models.AutoField(primary_key=True)
-    case_name = models.CharField(max_length=188, unique=True)
+    #多表关联？
     project = models.CharField(max_length=168, unique=True)
     model = models.CharField(max_length=168, unique=True)
-    creator = models.CharField(max_length=50)
-    tester = models.CharField(max_length=50)
-    create_time = models.DateField(auto_now_add=True)
-    update_time = models.DateField(auto_now=True)
 
-class CaseDetail(models.Model):
-    '''
-    执行的用例
-    '''
-    id = models.AutoField(primary_key=True)
+    case_id = models.AutoField(primary_key=True)
     case_name = models.CharField(max_length=188,unique=True)
-
     url = models.CharField(max_length=10000)
     method = models.CharField(max_length=20)
     re_header = models.TextField()
@@ -45,10 +33,12 @@ class CaseDetail(models.Model):
     check_type = models.CharField(max_length=15)
     case_description = models.TextField(blank=True)
     result = models.BooleanField(blank=True, default=NULL)
+    creator = models.CharField(max_length=50)
+    tester = models.CharField(max_length=50)
 
-    execution_time = models.DateTimeField()
     create_time = models.DateField(auto_now_add=True)
     update_time = models.DateField(auto_now=True)
+    execution_time = models.DateTimeField()
 
 class TestSuite(models.Model):
     '''
