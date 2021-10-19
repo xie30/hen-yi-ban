@@ -9,3 +9,10 @@
     3-1.后台部分要结合python的unittest模块了-这块估计还要重新学
     3-2.前端部分用前-后分离的形式写
 */
+*{
+    margin: 0;
+    padding: 0;
+}
+.titles{
+    display: flex;
+}
