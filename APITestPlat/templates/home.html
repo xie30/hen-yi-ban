@@ -6,27 +6,32 @@
     <link rel="stylesheet" href="/static/css/home.css">
 </head>
 <body>
-<p>welcome</p>
-<div class="title">
-    <div class="titles">
-        <div class="seting">
-            <div class="seting-content">项目配置
-
-            </div>
-            <div class="seting-line"></div>
-        </div>
-        <div class="project">
-            <p>模块</p>
-        </div>
-        <div class="case-list"></div>
-        <div class="test-suite"></div>
-        <div class="test-plan"></div>
-        <div class="test-report"></div>
+<div class="home-p">
+    <div class="logout">
+        <button id="logout-but">退出登录</button>
     </div>
+    <div class="title">
+        <div class="titles">
+            <!-- 通常可以用ul，语义化，而不是都用div -->
+            <div class="setting">
+                <div class="setting-content">
+                    <span id="setting-text">项目配置</span>
+                </div>
+                <div class="setting-line"></div>
+            </div>
+            <div class="project">
+                <span id="project-text">模块</span>
+                <div class="project-line"></div>
+            </div>
+            <div class="case-list"></div>
+            <div class="test-suite"></div>
+            <div class="test-plan"></div>
+            <div class="test-report"></div>
+        </div>
+    </div>
+
 </div>
-<div class="logout">
-        <button>退出登录</button>
-</div>
+
 
 </body>
 </html>
