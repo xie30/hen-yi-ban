@@ -6,6 +6,83 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "4818077",
+      "name": "牛",
+      "font_class": "niu",
+      "unicode": "e841",
+      "unicode_decimal": 59457
+    },
+    {
+      "icon_id": "3108158",
+      "name": "测试用例集",
+      "font_class": "test-case-group",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "7494699",
+      "name": "日历，台历，计划，日程",
+      "font_class": "huabanfuben",
+      "unicode": "e69d",
+      "unicode_decimal": 59037
+    },
+    {
+      "icon_id": "16635512",
+      "name": "模块",
+      "font_class": "mokuai",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "24642005",
+      "name": "project",
+      "font_class": "project",
+      "unicode": "e911",
+      "unicode_decimal": 59665
+    },
+    {
+      "icon_id": "10056797",
+      "name": "复制",
+      "font_class": "fuzhi1",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "7991120",
+      "name": "启动",
+      "font_class": "qidong",
+      "unicode": "e6af",
+      "unicode_decimal": 59055
+    },
+    {
+      "icon_id": "15824164",
+      "name": "【视图】开始漫游",
+      "font_class": "shitukaishimanyou",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "6539858",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "6539842",
+      "name": "编辑",
+      "font_class": "bianji",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "6539866",
+      "name": "退出登录",
+      "font_class": "tuichudenglu",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
       "icon_id": "845842",
       "name": "不显示密码",
       "font_class": "buxianshimima",

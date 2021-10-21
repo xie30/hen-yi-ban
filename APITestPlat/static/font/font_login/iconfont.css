@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2812018 */
-  src: url('iconfont.woff2?t=1631606409225') format('woff2'),
-       url('iconfont.woff?t=1631606409225') format('woff'),
-       url('iconfont.ttf?t=1631606409225') format('truetype');
+  src: url('iconfont.woff2?t=1634813602653') format('woff2'),
+       url('iconfont.woff?t=1634813602653') format('woff'),
+       url('iconfont.ttf?t=1634813602653') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,50 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-niu:before {
+  content: "\e841";
+}
+
+.icon-test-case-group:before {
+  content: "\e606";
+}
+
+.icon-huabanfuben:before {
+  content: "\e69d";
+}
+
+.icon-mokuai:before {
+  content: "\e623";
+}
+
+.icon-project:before {
+  content: "\e911";
+}
+
+.icon-fuzhi1:before {
+  content: "\e60e";
+}
+
+.icon-qidong:before {
+  content: "\e6af";
+}
+
+.icon-shitukaishimanyou:before {
+  content: "\e659";
+}
+
+.icon-shanchu:before {
+  content: "\e60c";
+}
+
+.icon-bianji:before {
+  content: "\e603";
+}
+
+.icon-tuichudenglu:before {
+  content: "\e610";
 }
 
 .icon-buxianshimima:before {
