@@ -40,10 +40,31 @@
             </div>
         </div>
     </div>
-
 </div>
 <!-- 项目配置列表/表格 -->
-
+<div class="add-env">
+    <button class="add-button">
+        <span id="add-env-button">
+            新增环境
+        </span>
+    </button>
+</div>
+<table class="set-contents" border="1">
+    <tr id="env-list-fist">
+        <th>环境名</th>
+        <th>URL</th>
+        <th>环境描述</th>
+        <th>创建时间</th>
+        <th>更新时间</th>
+    </tr>
+    <tr id="env-list-data">
+        <td>{{ env_name }}</td>
+        <td>{{ host }}</td>
+        <td>{{ decription }}</td>
+        <td>{{ create_time }}</td>
+        <td>{{ update_time }}</td>
+    </tr>
+</table>
 <!-- 模块列表/表格 -->
 
 <!-- 测试用例列表/表格 -->
@@ -56,7 +77,9 @@
 
 
 <script src="/static/js/jquery/jquery-3.6.0.min.js"></script>
+<script>
 
+</script>
 
 
 </body>

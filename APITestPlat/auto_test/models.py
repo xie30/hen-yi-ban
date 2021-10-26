@@ -33,8 +33,8 @@ class MoKuai(models.Model):
     m_tester = models.CharField(max_length=100)
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
-    # models ---> project多对一
-    project = models.ForeignKey("Project", on_delete=models.CASCADE)
+    # models ---> project多对一,涉及到清空时，null参数必须要设置为true
+    project = models.ForeignKey("Project", on_delete=models.CASCADE,null=True)
     class Meta:
         verbose_name = "model"
         verbose_name_plural = "models"
@@ -60,11 +60,11 @@ class CaseList(models.Model):
     #增加字段支持上传附件的接口？
 
     # case ---> project_name 多对一
-    # case ---> model_name 多对一
-    project = models.ForeignKey("Project", on_delete=models.CASCADE)
-    model = models.ForeignKey("MoKuai", on_delete=models.CASCADE)
+    # case ---> model_name 多对一，涉及到清空时，null参数必须要设置为true
+    project = models.ForeignKey("Project", on_delete=models.CASCADE, null=True)
+    model = models.ForeignKey("MoKuai", on_delete=models.CASCADE, null=True)
     #case --->suite 多对一
-    suite = models.ForeignKey("TestSuite", on_delete=models.CASCADE)
+    suite = models.ForeignKey("TestSuite", on_delete=models.CASCADE, null=True)
 
 class TestSuite(models.Model):
     '''
@@ -73,8 +73,8 @@ class TestSuite(models.Model):
     name = models.CharField(max_length=200, unique=True)
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
-    # suite -->project_name多对一
-    project = models.ForeignKey("Project", on_delete=models.CASCADE)
+    # suite -->project_name多对一,涉及到清空时，null参数必须要设置为true
+    project = models.ForeignKey("Project", on_delete=models.CASCADE, null=True)
 
 class TestPlan(models.Model):
     '''
