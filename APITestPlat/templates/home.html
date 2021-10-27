@@ -42,12 +42,38 @@
     </div>
 </div>
 <!-- 项目配置列表/表格 -->
-<div class="add-env">
+<div class="add-env-but">
     <button class="add-button">
         <span id="add-env-button">
             新增环境
         </span>
     </button>
+</div>
+<!-- 新增弹窗 -->
+<div class="add-env">
+    <div class="add-env-win">
+        <div class="new-env">
+            <div class="add-env-close">
+                <button id="close-but">
+                    <span>x</span>
+                </button>
+            </div>
+            <div class="add-env-content">
+                <p>环境名：<input type="text" id="name"></p>
+                <p>Host：<input type="text" id="host_url"></p>
+                <p>描述：<input type="text" id="env_description"></p>
+            </div>
+            <div class="add-new-but">
+                <div class="env-save-but">
+                    <button>保存</button>
+                </div>
+                <div class="env-cancel-but">
+                    <button>取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <table class="set-contents" border="1">
     <tr id="env-list-fist">
@@ -78,7 +104,9 @@
 
 <script src="/static/js/jquery/jquery-3.6.0.min.js"></script>
 <script>
-
+    $(".add-env-but").click(function(){
+        $(".add-env").show()
+    })
 </script>
 
 
