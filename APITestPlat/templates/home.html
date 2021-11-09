@@ -9,6 +9,7 @@
 
 </head>
 <body>
+{% csrf_token %}
 <div class="home-p">
     <div class="logout">
         <button id="logout-but">退出登录</button>
@@ -76,6 +77,7 @@
 
 </div>
 <table class="set-contents" border="1">
+    <thead>
     <tr id="env-list-fist">
         <th>环境名</th>
         <th>URL</th>
@@ -83,13 +85,8 @@
         <th>创建时间</th>
         <th>更新时间</th>
     </tr>
-    <tr id="env-list-data">
-        <td>{{ env_name }}</td>
-        <td>{{ host }}</td>
-        <td>{{ decription }}</td>
-        <td>{{ create_time }}</td>
-        <td>{{ update_time }}</td>
-    </tr>
+    </thead>
+    <tbody></tbody>
 </table>
 <!-- 模块列表/表格 -->
 
@@ -104,11 +101,68 @@
 
 <script src="/static/js/jquery/jquery-3.6.0.min.js"></script>
 <script>
+    <!-- 新增册数环境 -->
     $(".add-env-but").click(function(){
         $(".add-env").show()
     })
-</script>
+    <!-- 取消和关闭新增的输入弹框 -->
+    $("#close-but,.env-cancel-but").click(function(){
+        $(".add-env").hide()
+    })
+    <!-- 保存,同时向后台发送请求保存数据 关闭弹框 -->
+    $(".env-save-but").click(function () {
+        var env_name = $("#name").val()
+        var env_host = $("#host_url").val()
+        var env_description = $("#env_description").val()
+        $.ajax(
+            {
+                url:"./autotest/env_add/",
+                type:"POST",
+                contentType:"json",
+                headers:{"X-CSRFToken": $("[name='csrfmiddlewaretoken']").val()},
+                data:JSON.stringify({
+                    name:env_name,
+                    host_url: env_host,
+                    env_description: env_description
+                }),
+                success:function (data) {
+                    {#console.log(data)#}
+                    console.log(2)
+                }
+            }
+        )
+        $(".add-env").hide()
+    })
+    <!-- 点击查询项目配置 -->
+    var temp = `<tr id="env-list-data">
+        <td id="list-env-name">{{ env_name }}</td>
+        <td id=" list-host">{{ host }}</td>
+        <td id="list-dec">{{ decription }}</td>
+        <td id="list-ctime">{{ create_time }}</td>
+        <td id="list-uptime">{{ update_time }}</td>
+        </tr>`;
 
+    $(".setting").click(function () {
+        $.ajax(
+            {
+                url:"./autotest/env/",
+                type:"GET",
+                headers:{"X-CSRFToken": $("[name='csrfmiddlewaretoken']").val()},
+                success:function (result) {
+                    console.log(result.data,typeof result)
+                    $.each(result.data,function (i,n) {
+                        {#index#}
+                        {#console.log(i)#}
+                        {#循环对应key，取到value#}
+                    })
+                    var innerHTML = '';
+                    innerHTML += temp.split('{{ name }}').join('ddd');
+                    document.querySelector('tbody').innerHTML= innerHTML;
+                },
+            }
+        )
+    })
+</script>
 
 </body>
 </html>

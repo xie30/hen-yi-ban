@@ -15,6 +15,7 @@ def hello(request):
     return redirect(reverse("login")) #http://127.0.0.1:8000/访问直接跳转到登录页面
 
 def home(request):
+    print ("5555")
     return render(request, './templates/home.html')
 
 def login(request):
