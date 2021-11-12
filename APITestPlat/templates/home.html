@@ -60,16 +60,16 @@
                 </button>
             </div>
             <div class="add-env-content">
-                <p>环境名：<input type="text" id="name"></p>
-                <p>Host：<input type="text" id="host_url"></p>
-                <p>描述：<input type="text" id="env_description"></p>
+                <p>环境名：<input type="text" id="env-name"></p>
+                <p>Host：<input type="text" id="env-host"></p>
+                <p>描述：<input type="text" id="env-description"></p>
             </div>
             <div class="add-new-but">
                 <div class="env-save-but">
                     <button>保存</button>
                 </div>
                 <div class="env-cancel-but">
-                    <button>取消</button>
+                    <button id="env-cancel">取消</button>
                 </div>
             </div>
         </div>
@@ -79,11 +79,13 @@
 <table class="set-contents" border="1">
     <thead>
     <tr id="env-list-fist">
+        <th>&nbsp  ID  &nbsp</th>
         <th>环境名</th>
         <th>URL</th>
         <th>环境描述</th>
         <th>创建时间</th>
         <th>更新时间</th>
+        <th>操作</th>
     </tr>
     </thead>
     <tbody></tbody>
@@ -101,68 +103,134 @@
 
 <script src="/static/js/jquery/jquery-3.6.0.min.js"></script>
 <script>
+    <!-- 访问home页面,默认查询env数据返回-->
+    reqEnv();
+    //项目配置被选中效果
+    <!-- 公用函数 -->
+
     <!-- 新增册数环境 -->
-    $(".add-env-but").click(function(){
-        $(".add-env").show()
-    })
+    var ne = document.querySelector(".add-env");
+    document.getElementsByClassName("add-button")[0].onclick = function(){addEnv()};
+    function addEnv(){
+        ne.style.display = 'block';
+    }
     <!-- 取消和关闭新增的输入弹框 -->
-    $("#close-but,.env-cancel-but").click(function(){
-        $(".add-env").hide()
-    })
+     function find(yuan) {
+         document.querySelector(yuan).onclick= function () {
+             ne.style.display = 'none';
+         }
+     }
+    find("#close-but");
+    find("#env-cancel");
+     /*
+    document.querySelector("#close-but").onclick = function(){
+        ne.style.display='none';
+    }
+    document.querySelector("#env-cancel").onclick = function(){
+        ne.style.display='none';
+    }
+    */
     <!-- 保存,同时向后台发送请求保存数据 关闭弹框 -->
-    $(".env-save-but").click(function () {
-        var env_name = $("#name").val()
-        var env_host = $("#host_url").val()
-        var env_description = $("#env_description").val()
-        $.ajax(
-            {
-                url:"./autotest/env_add/",
-                type:"POST",
-                contentType:"json",
-                headers:{"X-CSRFToken": $("[name='csrfmiddlewaretoken']").val()},
-                data:JSON.stringify({
-                    name:env_name,
-                    host_url: env_host,
-                    env_description: env_description
-                }),
-                success:function (data) {
-                    {#console.log(data)#}
-                    console.log(2)
-                }
+    var token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+    document.querySelector(".env-save-but").onclick = function(){
+        let name = document.querySelector("#env-name");
+        let host = document.querySelector("#env-host");
+        let dec = document.querySelector("#env-description");
+        let pas = JSON.stringify({"name":name.value, "host_url": host.value, "env_description": dec.value});
+        let xttp = new XMLHttpRequest();
+        xttp.open("POST","./autotest/env_add/",true);
+        xttp.setRequestHeader("X-CSRFToken",token);
+        xttp.setRequestHeader("X-Requested-With","XMLHttpRequest");
+        xttp.send(pas)
+        xttp.onreadystatechange =function () {
+            if (this.readyState==4 && this.status == 200){
+                console.log("新增成功")
+                name.value='';
+                host.value='';
+                dec.value='';
+                ne.style.display = 'none';
+                reqEnv();
             }
-        )
-        $(".add-env").hide()
-    })
+            else{
+                ne.style.display = 'none';
+            }
+        }
+    }
     <!-- 点击查询项目配置 -->
-    var temp = `<tr id="env-list-data">
-        <td id="list-env-name">{{ env_name }}</td>
-        <td id=" list-host">{{ host }}</td>
-        <td id="list-dec">{{ decription }}</td>
-        <td id="list-ctime">{{ create_time }}</td>
-        <td id="list-uptime">{{ update_time }}</td>
-        </tr>`;
+    var temp = `
+    <tr class="env-list-data">
+        <td name="list-env-id">{id}</td>
+        <td name="list-env-name">{name}</td>
+        <td name=" list-host">{host_url}</td>
+        <td name="list-dec">{env_description}</td>
+        <td name="list-ctime">{create_time}</td>
+        <td name="list-uptime">{update_time}</td>
+        <td class="list-op">
+            <button class="env-edit">编辑</button>
+            <button class="env-delete">删除</button></td>
+        </tr>`
+    <!-- 如果要放在标签的写法 -->
+    //var temp= document.querySelector('tbody').innerHTML
+    {#console.log(temp)#}
+    document.querySelector(".setting").onclick = function(){
+        reqEnv();
+    }
 
-    $(".setting").click(function () {
-        $.ajax(
-            {
-                url:"./autotest/env/",
-                type:"GET",
-                headers:{"X-CSRFToken": $("[name='csrfmiddlewaretoken']").val()},
-                success:function (result) {
-                    console.log(result.data,typeof result)
-                    $.each(result.data,function (i,n) {
-                        {#index#}
-                        {#console.log(i)#}
-                        {#循环对应key，取到value#}
-                    })
-                    var innerHTML = '';
-                    innerHTML += temp.split('{{ name }}').join('ddd');
-                    document.querySelector('tbody').innerHTML= innerHTML;
-                },
-            }
-        )
+    <!-- 请求环境配置查询的函数-->
+    function reqEnv(){
+        let envttp = new XMLHttpRequest();
+        //每当 readyState 发生变化时就会调用 onreadystatechange 函数,所以判断条件需要this.readyState==4
+        envttp.onreadystatechange=function () {
+            if (this.readyState==4 && this.status==200){
+                //console.log(envttp.responseText)
+                var innerHTML= '';
+                data = JSON.parse(envttp.responseText);
+                envdata = data["data"];
+                for (let envs in envdata){
+                    //console.log(envs,typeof envs);
+                    ds = envdata[parseInt(envs)];
+                    var t = temp; //这里的赋值要保证每次循环数据的时候，t都是空的
+                        for (d in ds){
+                            t = t.split('{' + d + '}').join(ds[d]);
+                        }
+                    innerHTML += t;
+                    }
+                }
+                document.querySelector('tbody').innerHTML = innerHTML;
+            };
+        envttp.open("GET", "./autotest/env/", true);
+        envttp.setRequestHeader("X-CSRFToken",token);
+        envttp.setRequestHeader("X-Requested-With","XMLHttpRequest");
+        envttp.send();
+    }
+    <!-- 编辑环境 -->
+
+    <!-- 删除环境-->
+    var t =document.querySelector(".set-contents")
+    t.addEventListener("click",(event)=>{
+        if ( !event.target.classList.contains("env-delete") ){
+            return;
+        }
+        var deenv = event.target.parentNode.parentNode
+        var na = deenv.querySelector("[name='list-env-name']").innerText;
+        envDel(na);
     })
-</script>
 
+    function envDel(name){
+        fetch("./autotest/env_delete/",{
+            method:"DELETE",
+            headers:{"X-CSRFToken":token,"X-Requested-With":"XMLHttpRequest"},
+            body:JSON.stringify({name: name}),
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          reqEnv();
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+</script>
 </body>
 </html>
