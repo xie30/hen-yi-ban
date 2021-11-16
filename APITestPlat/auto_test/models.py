@@ -6,9 +6,12 @@ class RunEnv(models.Model):
     '''
     测试环境
     '''
+    # DateTimeField、DateField和TimeField，其值分别对应着Python里的datetime.datetime、datetime.date和datetime.time三个实例，
+    # 这三个Field里都有两个参数：auto_now和auto_now_add，默认值均为False
     name = models.CharField(max_length=188, unique=True)
     host_url = models.CharField(max_length=1000, unique=True)
     env_description = models.CharField(max_length=1000)
+    # 如何将世界标准时间转换成本地时间？--在settings.py中将USE_TZ改为False，即USE_TZ=False
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
 

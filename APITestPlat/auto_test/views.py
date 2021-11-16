@@ -42,7 +42,7 @@ def env_modify(request):
         qs = models.RunEnv.objects.filter(id=req["id"])
         # qs : QuerySet
         qs.update(name=req["name"], host_url=req["host_url"], env_description=req["env_description"],
-                  update_time=datetime.datetime.utcnow())
+                  update_time=datetime.datetime.now())
         return JsonResponse(data={"msg": "ok"}, status=200)
     print("修改失败")
     return render(request, "./templates/home.html")
