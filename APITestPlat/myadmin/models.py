@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, User
 
 
-
 # Create your models here.
 
 # class User(models.Model):
@@ -18,12 +17,11 @@ from django.contrib.auth.models import AbstractUser, User
 #         db_table = 'user'
 
 
-#用户表，改用django 的方法AbstractUser
+# 用户表，改用django 的方法AbstractUser
 class UserFi(AbstractUser):
-
-    '''
+    """
         用户表
-    '''
+    """
     mobile = models.CharField(max_length=15, null=True, blank=True)
 
     def __str__(self):

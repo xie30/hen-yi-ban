@@ -12,7 +12,7 @@ document.getElementsByClassName("add-button")[0].onclick = function(){
     document.querySelector("#env-description").value='';
     ne.style.display = 'block';
     document.querySelector(".env-save-but").onclick=function () {
-    nawSave();
+    newSave();
 }
 
 };
@@ -27,7 +27,7 @@ find("#env-cancel");
 <!-- 保存,同时向后台发送请求保存数据 关闭弹框 -->
 var token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
 
-function nawSave(){
+function newSave(){
     let name = document.querySelector("#env-name");
     let host = document.querySelector("#env-host");
     let dec = document.querySelector("#env-description");
@@ -130,12 +130,12 @@ function editSave(event) {
 }
 }
 function oldSave(ids) {
-        let newname = document.querySelector("#env-name").value;
-        let newhost = document.querySelector("#env-host").value;
-        let newdecs = document.querySelector("#env-description").value;
+        let newName = document.querySelector("#env-name").value;
+        let newHost = document.querySelector("#env-host").value;
+        let newDecs = document.querySelector("#env-description").value;
         fetch("./autotest/env_modify/",
             {method: "POST", headers: {"X-CSRFToken": token, "X-Requested-With": "XMLHttpRequest"},
-                body: JSON.stringify({id: ids, name: newname, host_url: newhost, env_description: newdecs})
+                body: JSON.stringify({id: ids, name: newName, host_url: newHost, env_description: newDecs})
         })
             .then(response => response.json())
             .then(data => {console.log("Success",data);
