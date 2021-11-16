@@ -17,11 +17,12 @@ class Project(models.Model):
     项目
     '''
     name = models.CharField(max_length=188, unique=True)
-    p_description = models.CharField(max_length=1000)
+    p_description = models.CharField(max_length=1000, blank=True)
     p_creator = models.CharField(max_length=100)
     p_tester = models.CharField(max_length=100)
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
+    # 时间不会自动更新？？
 
 class MoKuai(models.Model):
     '''

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import datetime
 
 # Create your views here.
 
@@ -32,6 +33,21 @@ def env_add(request):
         env = models.RunEnv.objects.create(name=req["name"], host_url=req["host_url"], env_description=req["env_description"])
         return JsonResponse(data={"msg":"ok"},status=200)
     print ("新增失败")
+    return render(request, "./templates/home.html")
+
+def env_modify(request):
+    if request.is_ajax():
+        req = json.loads(request.body)
+        # run_env : RunEnv
+        # run_env = models.RunEnv.objects.filter(id=req["id"]).get()
+        # for field in ["name", "host_url", "env_description"]:
+        #     setattr(run_env, field, req[field])
+        # run_env.save()
+        qs = models.RunEnv.objects.filter(id=req["id"])
+        # qs : QuerySet
+        qs.update(update_time=datetime.datetime.utcnow())
+        return JsonResponse(data={"msg":"ok"},status=200)
+    print ("修改失败")
     return render(request, "./templates/home.html")
 
 def env_delete(request):
