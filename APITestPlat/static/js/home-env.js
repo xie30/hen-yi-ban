@@ -1,4 +1,3 @@
-
 <!-- 访问home页面,默认查询env数据返回-->
 reqEnv();
 //项目配置被选中效果
@@ -39,7 +38,6 @@ function newSave(){
     xttp.send(pas)
     xttp.onreadystatechange =function () {
         if (this.readyState==4 && this.status == 200){
-            //console.log("新增成功")
             name.value='';
             host.value='';
             dec.value='';
@@ -62,29 +60,26 @@ var temp = `<tr class="env-list-data">
     <td class="list-op">
         <button class="env-edit">编辑</button>
         <button class="env-delete">删除</button></td>
-    </tr>`
+    </tr>`;
 // <!-- 如果要放在标签的写法 -->
 //var temp= document.querySelector('tbody').innerHTML
 // {#console.log(temp)#}
 document.querySelector(".setting").onclick = function(){
     reqEnv();
-}
-
+};
 <!-- 请求环境配置查询的函数-->
 function reqEnv(){
     let envttp = new XMLHttpRequest();
     //每当 readyState 发生变化时就会调用 onreadystatechange 函数,所以判断条件需要this.readyState==4
     envttp.onreadystatechange=function () {
         if (this.readyState==4 && this.status==200){
-            //console.log(envttp.responseText)
-            var innerHTML= '';
-            data = JSON.parse(envttp.responseText);
-            envdata = data["data"];
-            for (let envs in envdata){
+            let innerHTML= '';
+            let envData = JSON.parse(envttp.responseText)["data"];
+            for (let envs in envData){
                 //console.log(envs,typeof envs);
-                ds = envdata[parseInt(envs)];
-                var t = temp; //这里的赋值要保证每次循环数据的时候，t都是空的
-                    for (d in ds){
+                let ds = envData[parseInt(envs)];
+                let t = temp; //这里的赋值要保证每次循环数据的时候，t都是空的
+                    for ( let d in ds){
                         t = t.split('{' + d + '}').join(ds[d]);
                     }
                 innerHTML += t;
@@ -103,22 +98,20 @@ function reqEnv(){
 var t =document.querySelector(".set-contents")
 t.addEventListener("click",(event)=> {
     if (event.target.classList.contains("env-delete")) {
-        let deenv = event.target.parentNode.parentNode;
-        let na = deenv.querySelector("[name='list-env-name']").innerText;
+        let deEnv = event.target.parentNode.parentNode;
+        let na = deEnv.querySelector("[name='list-env-name']").innerText;
         envDel(na);
     }
     if (event.target.classList.contains("env-edit")) {
-        console.log("1111")
         editSave(event);
     }
 })
 function editSave(event) {
-    let deenv = event.target.parentNode.parentNode;
-    let ids = deenv.querySelector("[name='list-env-id']").innerText
-    // console.log("22222")
-    let name = deenv.querySelector("[name='list-env-name']").innerText;
-    let host = deenv.querySelector("[name='list-host']").innerText;
-    let dec = deenv.querySelector("[name='list-dec']").innerText;
+    let edEnv = event.target.parentNode.parentNode;
+    let ids = edEnv.querySelector("[name='list-env-id']").innerText
+    let name = edEnv.querySelector("[name='list-env-name']").innerText;
+    let host = edEnv.querySelector("[name='list-host']").innerText;
+    let dec = edEnv.querySelector("[name='list-dec']").innerText;
     ne.style.display = 'block';
     document.querySelector("#env-name").value = name;
     document.querySelector("#env-host").value = host;
