@@ -32,21 +32,22 @@ def login(request):
     if request.method == 'POST':
         # 获取提交的数据https://docs.djangoproject.com/zh-hans/3.2/ref/request-response/
         user_form = request.POST
-        print('提交:\n' + str(user_form.dict()))
+        # print('提交:\n' + str(user_form.dict()))
         # model对象
         login_user = UserFi()
         login_user.username = user_form['username']
         login_user.password = user_form['password']
-        print(login_user.username)
+        # print(login_user.username)
         # 查询数据，拿密码作比对，先查账号有没有，再查密码对不对
-        print(UserFi.objects.all().values())
+        # print(UserFi.objects.all().values())
         user = UserFi.objects.filter(username=login_user.username).values()
         msg = "账号或密码不对,请输入正确的账号和密码"
         if user:
-            print(user)
+            # print(user)
             password = user[0]["password"]
             if password == login_user.password:
                 # print()
+                request.session["is_login"] = True
                 return redirect(reverse("home"))  # 直接域名 @login_required,主页要限制只有登录才能访问
             else:
                 # print("请输入正确的用户名/密码")
@@ -93,3 +94,14 @@ def register(request):
     else:
         # print('打开注册页面')
         return render(request, './templates/register.html')
+
+
+def logout(request):
+    """
+    :param request:
+    :return:
+    """
+    print(request.is_ajax())
+    request.session.flush()
+    return redirect('/login/')
+

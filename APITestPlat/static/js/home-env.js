@@ -69,28 +69,28 @@ document.querySelector(".setting").onclick = function(){
 };
 <!-- 请求环境配置查询的函数-->
 function reqEnv(){
-    let envttp = new XMLHttpRequest();
-    //每当 readyState 发生变化时就会调用 onreadystatechange 函数,所以判断条件需要this.readyState==4
-    envttp.onreadystatechange=function () {
-        if (this.readyState==4 && this.status==200){
-            let innerHTML= '';
-            let envData = JSON.parse(envttp.responseText)["data"];
-            for (let envs in envData){
-                //console.log(envs,typeof envs);
+    fetch("./autotest/env/",{method:"get",
+        headers:{"X-CSRFToken":token,"X-Requested-With":"XMLHttpRequest"},
+            })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            var innerHTML= '';
+            var envData = data["data"];
+            for (let envs in data["data"]){
                 let ds = envData[parseInt(envs)];
                 let t = temp; //这里的赋值要保证每次循环数据的时候，t都是空的
-                    for ( let d in ds){
-                        t = t.split('{' + d + '}').join(ds[d]);
-                    }
-                innerHTML += t;
-                }
+                for ( let d in ds){
+                    t = t.split('{' + d + '}').join(ds[d]);
             }
+                innerHTML += t;
+        }
             document.querySelector('tbody').innerHTML = innerHTML;
-        };
-    envttp.open("GET", "./autotest/env/", true);
-    envttp.setRequestHeader("X-CSRFToken",token);
-    envttp.setRequestHeader("X-Requested-With","XMLHttpRequest");
-    envttp.send();
+        //window.location.href=data['url']
+    })
+        .catch((error)=>{
+            console.error('Error:', error);
+        })
 }
 <!-- 编辑环境 -->
 <!-- 删除环境-->
@@ -152,4 +152,17 @@ function envDel(name){
     .catch((error) => {
       console.error('Error:', error);
     });
+}
+// 退出登录
+// console.log("6666")
+document.querySelector("#logout-but").onclick = function () {
+    console.log("退出登录")
+    fetch("/logout/",{
+        method:"POST",
+        headers:{"X-CSRFToken":token},
+        // body:JSON.stringify({"": ""}),
+    })
+    .then(data => {
+        window.location.href=data['url']
+    })
 }

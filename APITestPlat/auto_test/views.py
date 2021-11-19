@@ -1,27 +1,38 @@
-from django.shortcuts import render
-import datetime
-
 # Create your views here.
 
+
+import datetime
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
 from auto_test.models import RunEnv
 from auto_test import models
 import json
+from django.contrib.auth.decorators import login_required
 from django.core import serializers
 
 
-def env(requset):
+@login_required(login_url='/login/')
+def env(request):
     # 查询env表并返回数据
-    if requset.is_ajax():
+    # if requset.session.get("is_login"):
+    print("88888888888888888888888")
+    if request.is_ajax():
         envs = RunEnv.objects.values()
         rep = {"msg": "success", "code": "200", "data": []}
         for i in range(len(envs)):
             rep["data"].append(envs[i])
         return JsonResponse(rep)
-    print("查询失败")
-    return render(requset, "./templates/home.html")
+    else:
+        print("查询失败")
+        return render(request, "./templates/home.html")
+    # else:
+    #     #如果没有权限，怎么让用户直接跳转到登录页????怎样全局加上session，每个函数都加太麻烦了
+    #     # 1.
+    #     #2.login_required,或者自己写一个装饰器
+    #     return redirect('/login/')
 
 
+@login_required(login_url='/login/')
 def env_add(request):
     if request.is_ajax():
         req = json.loads(request.body)
