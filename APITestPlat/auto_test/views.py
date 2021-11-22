@@ -7,15 +7,15 @@ from django.shortcuts import render, redirect
 from auto_test.models import RunEnv
 from auto_test import models
 import json
+from myadmin.views import login_check
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 
 
-@login_required(login_url='/login/')
+@login_check
 def env(request):
     # 查询env表并返回数据
     # if requset.session.get("is_login"):
-    print("88888888888888888888888")
     if request.is_ajax():
         envs = RunEnv.objects.values()
         rep = {"msg": "success", "code": "200", "data": []}
@@ -32,7 +32,7 @@ def env(request):
     #     return redirect('/login/')
 
 
-@login_required(login_url='/login/')
+@login_check
 def env_add(request):
     if request.is_ajax():
         req = json.loads(request.body)
@@ -42,6 +42,7 @@ def env_add(request):
     return render(request, "./templates/home.html")
 
 
+@login_check
 def env_modify(request):
     if request.is_ajax():
         req = json.loads(request.body)
@@ -59,6 +60,7 @@ def env_modify(request):
     return render(request, "./templates/home.html")
 
 
+@login_check
 def env_delete(request):
     if request.is_ajax():
         envs = json.loads(request.body)

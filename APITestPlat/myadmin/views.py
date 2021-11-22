@@ -11,10 +11,19 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 
 
+def login_check(func):
+    def wrapper(request, *args, **kwargs):
+        if not request.session.get('is_login'):
+            return redirect(reverse("login"))
+        return func(request, *args, **kwargs)
+    return wrapper
+
+
 def hello(request):
     return redirect(reverse("login"))  # http://127.0.0.1:8000/访问直接跳转到登录页面
 
 
+@login_check
 def home(request):
     print("5555")
     return render(request, './templates/home.html')
@@ -48,6 +57,7 @@ def login(request):
             if password == login_user.password:
                 # print()
                 request.session["is_login"] = True
+                request.session["c_account"] = login_user.username
                 return redirect(reverse("home"))  # 直接域名 @login_required,主页要限制只有登录才能访问
             else:
                 # print("请输入正确的用户名/密码")
@@ -95,13 +105,12 @@ def register(request):
         # print('打开注册页面')
         return render(request, './templates/register.html')
 
-
+@login_check
 def logout(request):
     """
     :param request:
     :return:
     """
-    print(request.is_ajax())
     request.session.flush()
     return redirect('/login/')
 

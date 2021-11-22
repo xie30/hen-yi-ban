@@ -69,12 +69,13 @@ document.querySelector(".setting").onclick = function(){
 };
 <!-- 请求环境配置查询的函数-->
 function reqEnv(){
-    fetch("./autotest/env/",{method:"get",
-        headers:{"X-CSRFToken":token,"X-Requested-With":"XMLHttpRequest"},
+    //console.log("11111")
+    fetch("./autotest/env/",{method:"GET",
+        headers:{"X-CSRFToken":token, "X-Requested-With":"XMLHttpRequest"},
             })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            //console.log(data)
             var innerHTML= '';
             var envData = data["data"];
             for (let envs in data["data"]){
