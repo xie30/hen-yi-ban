@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="/static/css/home.css">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/bootstrap-3.4.1-dist/css/bootstrap.css">
+{#    <script src="/static/js/home-env.js"></script>#}
+{#    <script src="/static/js/home-project.js"></script>#}
+{#    不需要这里加#}
+
+</head>
+<body>
+{% csrf_token %}
+<div class="home-p">
+    <div class="logout">
+        <button id="logout-but">退出登录</button>
+    </div>
+    <div class="title">
+        <div class="titles">
+            <!-- 通常可以用ul，语义化，而不是都用div -->
+           <ul class="titles-content">
+               <li class="setting"><span>环境配置</span></li>
+               <li class="project"><span>项目</span></li>
+               <li class="mokuai"><span>模块</span></li>
+               <li class="case-list"><span>用例</span></li>
+               <li class="test-suite"><span>测试集</span></li>
+               <li class="test-plan"><span>测试计划</span></li>
+               <li class="test-report"><span>测试报告</span></li>
+           </ul>
+        </div>
+    </div>
+</div>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

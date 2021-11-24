@@ -1,107 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>首页</title>
-    <link rel="stylesheet" href="/static/css/home.css">
-    <link rel="stylesheet" href="/static/css/base.css">
-    <link rel="stylesheet" href="/static/bootstrap-3.4.1-dist/css/bootstrap.css">
-
-</head>
-<body>
-{% csrf_token %}
-<div class="home-p">
-    <div class="logout">
-        <button id="logout-but">退出登录</button>
+{% extends 'base.html' %}
+{% block content %}
+    <!-- 项目配置列表/表格 -->
+    <div class="add-env-but">
+        <button class="add-button">
+            <span id="add-env-button">
+                新增环境
+            </span>
+        </button>
     </div>
-    <div class="title">
-        <div class="titles">
-            <!-- 通常可以用ul，语义化，而不是都用div -->
-            <div class="setting">
-                <div class="setting-content">
-                    <span id="setting-text">项目配置</span>
+    <!-- 新增弹窗 -->
+    <div class="add-env">
+        <div class="add-env-win">
+            <div class="new-env">
+                <div class="add-env-content">
+                    <p>环境名：<input type="text" id="env-name"></p>
+                    <p>H o s t：<input type="text" id="env-host"></p>
+                    <p>简 &nbsp介&nbsp：<input type="text" id="env-description"></p>
                 </div>
-                <div class="setting-line"></div>
-            </div>
-            <div class="project">
-                <span id="project-text">模块</span>
-                <div class="project-line"></div>
-            </div>
-            <div class="case-list">
-                <span id="case-text">用例</span>
-            </div>
-            <div class="test-suite">
-                <span id="suite-text">测试集</span>
-            </div>
-            <div class="test-plan">
-                <span id="plan-text">测试计划</span>
-            </div>
-            <div class="test-report">
-                <span id="report-text">测试报告</span>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- 项目配置列表/表格 -->
-<div class="add-env-but">
-    <button class="add-button">
-        <span id="add-env-button">
-            新增环境
-        </span>
-    </button>
-</div>
-<!-- 新增弹窗 -->
-<div class="add-env">
-    <div class="add-env-win">
-        <div class="new-env">
-            <div class="add-env-close">
-                <button id="close-but">
-                    <span>x</span>
-                </button>
-            </div>
-            <div class="add-env-content">
-                <p>环境名：<input type="text" id="env-name"></p>
-                <p>Host：<input type="text" id="env-host"></p>
-                <p>描述：<input type="text" id="env-description"></p>
-            </div>
-            <div class="add-new-but">
-                <div class="env-save-but">
+                <div class="add-new-but">
+                    <div class="env-save-but">
                     <button>保存</button>
                 </div>
-                <div class="env-cancel-but">
+                    <div class="env-cancel-but">
                     <button id="env-cancel">取消</button>
                 </div>
+                </div>
             </div>
+            <div class="add-env-close">
+                    <button id="close-but">
+                        <span>x</span>
+                    </button>
+                </div>
         </div>
     </div>
+    <table class="set-contents" border="1">
+        <thead>
+        <tr id="env-list-fist">
+            <th>&nbsp  ID  &nbsp</th>
+            <th>环境名</th>
+            <th>URL</th>
+            <th>环境描述</th>
+            <th>创建时间</th>
+            <th>更新时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <!-- 项目 -->
+    <!-- 模块列表/表格 -->
 
-</div>
-<table class="set-contents" border="1">
-    <thead>
-    <tr id="env-list-fist">
-        <th>&nbsp  ID  &nbsp</th>
-        <th>环境名</th>
-        <th>URL</th>
-        <th>环境描述</th>
-        <th>创建时间</th>
-        <th>更新时间</th>
-        <th>操作</th>
-    </tr>
-    </thead>
-    <tbody></tbody>
-</table>
-<!-- 模块列表/表格 -->
+    <!-- 测试用例列表/表格 -->
 
-<!-- 测试用例列表/表格 -->
+    <!-- 测试集列表/表格 -->
 
-<!-- 测试集列表/表格 -->
+    <!-- 测试计划列表/表格 -->
 
-<!-- 测试计划列表/表格 -->
+    <!-- 报告模块列表/表格 -->
+    <script src="/static/js/home-env.js"></script>
+    <script src="/static/js/base.js"></script> //一定要有在这里？
+{% endblock %}
 
-<!-- 报告模块列表/表格 -->
-
-
-<script src="/static/js/home-env.js"></script>
-<script src="/static/js/home-mo.js"></script>
-</body>
-</html>

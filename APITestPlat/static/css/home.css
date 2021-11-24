@@ -13,6 +13,7 @@
     margin: 0;
     padding: 0;
     text-decoration: none;
+    list-style:none;
 }
 .home-p {
     /*display: flex;*/
@@ -32,7 +33,7 @@
     cursor: pointer;
 }
 .titles span{
-    padding: 10px;
+    padding:10px;
     font-size: 18px;
     background-color: #4e6ef2;
     color: #fffdef;
@@ -43,6 +44,11 @@
 }
 .titles{
     display: flex;
+}
+.titles-content{
+    display: flex;
+    width: 100%;
+    margin: auto;
 }
 .add-env-but{
     width: 80%;
@@ -55,7 +61,9 @@
     top: 0;
     width: 100%;
     height: 100%;
+    margin: auto;
     background:rgba(0,0,0,0.3);
+
 }
 .add-env-win{
     display: flex;
@@ -73,10 +81,22 @@
     justify-content: center;
     align-items: center;
     background: white;
+
 }
 .add-env-close{
-    display: block;
     float: right;
+    margin-top:-275px;
+    margin-left: -23px;
+}
+#close-but span{
+    margin: 5px;
+}
+.add-new-but{
+    display: flex;
+    padding-top: 200px;
+}
+.env-save-but,.env-cancel-but{
+    padding: 5px;
 }
 
 .set-contents{

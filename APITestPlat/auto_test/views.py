@@ -4,10 +4,11 @@
 import datetime
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-from auto_test.models import RunEnv
+from auto_test.models import RunEnv,Project
 from auto_test import models
 import json
 from myadmin.views import login_check
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 
@@ -69,3 +70,52 @@ def env_delete(request):
         msg = {"msg": "success", "code": "40010"}
         return JsonResponse(msg)
     # return render(requset, "./templates/home.html")
+
+
+@login_check
+def project(request):
+    """
+    查询project数据
+    :param request:
+    :return:
+    """
+
+    return redirect(reverse("project_page"))
+    # return render(request, './templates/project.html')
+
+
+def project_page(request):
+    if not request.is_ajax():
+        print("不是ajax")
+        return render(request, './templates/project.html')
+    return render(request, './templates/home.html')
+
+
+@login_check
+def add_project(requset):
+    """
+    新增项目
+    :param requset:
+    :return:
+    """
+    pass
+
+
+@login_check
+def edit_project(request):
+    """
+    编辑项目信息
+    :param request:
+    :return:
+    """
+    pass
+
+
+@login_check
+def delte_project(request):
+    """
+    删除项目
+    :param request:
+    :return:
+    """
+    pass

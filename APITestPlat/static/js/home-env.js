@@ -64,13 +64,10 @@ var temp = `<tr class="env-list-data">
 // <!-- 如果要放在标签的写法 -->
 //var temp= document.querySelector('tbody').innerHTML
 // {#console.log(temp)#}
-document.querySelector(".setting").onclick = function(){
-    reqEnv();
-};
 <!-- 请求环境配置查询的函数-->
 function reqEnv(){
     //console.log("11111")
-    fetch("./autotest/env/",{method:"GET",
+    fetch("/home/autotest/env/",{method:"GET",
         headers:{"X-CSRFToken":token, "X-Requested-With":"XMLHttpRequest"},
             })
         .then(response => response.json())
