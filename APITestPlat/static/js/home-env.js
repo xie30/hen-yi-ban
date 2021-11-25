@@ -1,28 +1,25 @@
 <!-- 访问home页面,默认查询env数据返回-->
-reqEnv();
+const envUrl = "/home/autotest/env/"
+var envB= document.querySelector(".setting span")
+home();
+function home() {
+    <!-- 请求环境配置查询的函数 从base.js中继承-->
+    allData(envUrl);
+    selected(envB);
+}
 //项目配置被选中效果
 <!-- 公用函数 -->
 <!-- 新增册数环境 -->
-var ne = document.querySelector(".add-env");
 document.getElementsByClassName("add-button")[0].onclick = function(){
     // document.querySelector("#list-env-id").value='';
     document.querySelector("#env-name").value='';
     document.querySelector("#env-host").value='';
     document.querySelector("#env-description").value='';
-    ne.style.display = 'block';
+    addWin.style.display = 'block';
     document.querySelector(".env-save-but").onclick=function () {
     newSave();
 }
-
 };
-<!-- 取消和关闭新增的输入弹框 -->
- function find(yuan) {
-     document.querySelector(yuan).onclick= function () {
-         ne.style.display = 'none';
-     }
- }
-find("#close-but");
-find("#env-cancel");
 <!-- 保存,同时向后台发送请求保存数据 关闭弹框 -->
 var token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
 
@@ -42,7 +39,7 @@ function newSave(){
             host.value='';
             dec.value='';
             ne.style.display = 'none';
-            reqEnv();
+            allData(envUrl);
         }
         else{
             ne.style.display = 'none';
@@ -64,32 +61,6 @@ var temp = `<tr class="env-list-data">
 // <!-- 如果要放在标签的写法 -->
 //var temp= document.querySelector('tbody').innerHTML
 // {#console.log(temp)#}
-<!-- 请求环境配置查询的函数-->
-function reqEnv(){
-    //console.log("11111")
-    fetch("/home/autotest/env/",{method:"GET",
-        headers:{"X-CSRFToken":token, "X-Requested-With":"XMLHttpRequest"},
-            })
-        .then(response => response.json())
-        .then(data => {
-            //console.log(data)
-            var innerHTML= '';
-            var envData = data["data"];
-            for (let envs in data["data"]){
-                let ds = envData[parseInt(envs)];
-                let t = temp; //这里的赋值要保证每次循环数据的时候，t都是空的
-                for ( let d in ds){
-                    t = t.split('{' + d + '}').join(ds[d]);
-            }
-                innerHTML += t;
-        }
-            document.querySelector('tbody').innerHTML = innerHTML;
-        //window.location.href=data['url']
-    })
-        .catch((error)=>{
-            console.error('Error:', error);
-        })
-}
 <!-- 编辑环境 -->
 <!-- 删除环境-->
 
@@ -131,7 +102,7 @@ function oldSave(ids) {
             .then(response => response.json())
             .then(data => {console.log("Success",data);
         ne.style.display = 'none';
-        reqEnv();
+        allData(envUrl);
         }).catch((error) => {console.error('Error:', error);
         });
  }
@@ -144,23 +115,11 @@ function envDel(name){
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Success:', data);
-      reqEnv();
+      //console.log('Success:', data);
+      allData(envUrl);
     })
     .catch((error) => {
       console.error('Error:', error);
     });
 }
-// 退出登录
-// console.log("6666")
-document.querySelector("#logout-but").onclick = function () {
-    console.log("退出登录")
-    fetch("/logout/",{
-        method:"POST",
-        headers:{"X-CSRFToken":token},
-        // body:JSON.stringify({"": ""}),
-    })
-    .then(data => {
-        window.location.href=data['url']
-    })
-}
+

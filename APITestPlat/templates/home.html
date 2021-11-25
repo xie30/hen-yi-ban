@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+{% block title %}首页{% endblock %}
 {% block content %}
     <!-- 项目配置列表/表格 -->
-    <div class="add-env-but">
+    <div class="add-but">
         <button class="add-button">
             <span id="add-env-button">
                 新增环境
@@ -9,24 +10,24 @@
         </button>
     </div>
     <!-- 新增弹窗 -->
-    <div class="add-env">
-        <div class="add-env-win">
-            <div class="new-env">
+    <div class="add-win">
+        <div class="add-edit-win">
+            <div class="new">
                 <div class="add-env-content">
                     <p>环境名：<input type="text" id="env-name"></p>
                     <p>H o s t：<input type="text" id="env-host"></p>
                     <p>简 &nbsp介&nbsp：<input type="text" id="env-description"></p>
                 </div>
-                <div class="add-new-but">
-                    <div class="env-save-but">
+                <div class="save-new-but">
+                    <div class="save-but">
                     <button>保存</button>
                 </div>
-                    <div class="env-cancel-but">
+                    <div class="cancel-but">
                     <button id="env-cancel">取消</button>
                 </div>
                 </div>
             </div>
-            <div class="add-env-close">
+            <div class="add-close">
                     <button id="close-but">
                         <span>x</span>
                     </button>
@@ -57,7 +58,7 @@
     <!-- 测试计划列表/表格 -->
 
     <!-- 报告模块列表/表格 -->
+    <script src="/static/js/base.js"></script>
     <script src="/static/js/home-env.js"></script>
-    <script src="/static/js/base.js"></script> //一定要有在这里？
 {% endblock %}
 

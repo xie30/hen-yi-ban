@@ -74,17 +74,6 @@ def env_delete(request):
 
 @login_check
 def project(request):
-    """
-    查询project数据
-    :param request:
-    :return:
-    """
-
-    return redirect(reverse("project_page"))
-    # return render(request, './templates/project.html')
-
-
-def project_page(request):
     if not request.is_ajax():
         print("不是ajax")
         return render(request, './templates/project.html')

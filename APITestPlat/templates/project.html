@@ -1,9 +1,55 @@
 {% extends 'base.html' %}
+{% block title %}项目{% endblock %}
 {% block content %}
-    <div>
-        <p>你好</p>
+    <div class="add-but">
+        <button class="add-button">
+            <span id="add-pro-button">
+                新增项目
+            </span>
+        </button>
     </div>
-    <script src="/static/js/home-project.js"></script>
+    <!-- 新增弹窗 -->
+    <div class="add-win">
+        <div class="add-edit-win">
+            <div class="new">
+                <div class="add-env-content">
+                    <p>项目名：<input type="text" id="pro-name"></p>
+                    <p>简 &nbsp介&nbsp：<input type="text" id="pro-description"></p>
+                    <p>测试人：<input type="text" id="tester"></p>
+                    <p>创建人：<input type="text" id="creator"></p>
+                </div>
+                <div class="save-new-but">
+                    <div class="save-but">
+                    <button>保存</button>
+                </div>
+                    <div class="cancel-but">
+                    <button id="pro-cancel">取消</button>
+                </div>
+                </div>
+            </div>
+            <div class="add-close">
+                    <button id="close-but">
+                        <span>x</span>
+                    </button>
+                </div>
+        </div>
+    </div>
+    <table class="set-contents" border="1">
+        <thead>
+        <tr id="pro-list-fist">
+            <th>&nbsp  ID  &nbsp</th>
+            <th>项目名</th>
+            <th>简 &nbsp介&nbsp</th>
+            <th>测试人</th>
+            <th>创建人</th>
+            <th>创建时间</th>
+            <th>更新时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
     <script src="/static/js/base.js"></script>
+    <script src="/static/js/home-project.js"></script>
     <!-- 这样就没办法点击回去项目配置？>
 {% endblock %}

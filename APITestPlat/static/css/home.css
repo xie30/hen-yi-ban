@@ -50,12 +50,12 @@
     width: 100%;
     margin: auto;
 }
-.add-env-but{
+.add-but{
     width: 80%;
     margin: auto;
     margin-top: 30px;
 }
-.add-env{
+.add-win{
     display: none;
     position: fixed;
     top: 0;
@@ -65,7 +65,7 @@
     background:rgba(0,0,0,0.3);
 
 }
-.add-env-win{
+.add-edit-win{
     display: flex;
     width: 80%;
     margin: auto;
@@ -73,7 +73,7 @@
     justify-content: center;
     align-items: center;
 }
-.new-env{
+.new{
     display: flex;
     padding: 10px;
     width: 800px;
@@ -83,7 +83,7 @@
     background: white;
 
 }
-.add-env-close{
+.add-close{
     float: right;
     margin-top:-275px;
     margin-left: -23px;
@@ -91,11 +91,11 @@
 #close-but span{
     margin: 5px;
 }
-.add-new-but{
+.save-new-but{
     display: flex;
     padding-top: 200px;
 }
-.env-save-but,.env-cancel-but{
+.save-but,.cancel-but{
     padding: 5px;
 }
 
