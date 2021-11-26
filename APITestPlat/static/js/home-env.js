@@ -1,51 +1,6 @@
 <!-- 访问home页面,默认查询env数据返回-->
 const envUrl = "/home/autotest/env/"
-var envB= document.querySelector(".setting span")
-home();
-function home() {
-    <!-- 请求环境配置查询的函数 从base.js中继承-->
-    allData(envUrl);
-    selected(envB);
-}
-//项目配置被选中效果
-<!-- 公用函数 -->
-<!-- 新增册数环境 -->
-document.getElementsByClassName("add-button")[0].onclick = function(){
-    // document.querySelector("#list-env-id").value='';
-    document.querySelector("#env-name").value='';
-    document.querySelector("#env-host").value='';
-    document.querySelector("#env-description").value='';
-    addWin.style.display = 'block';
-    document.querySelector(".env-save-but").onclick=function () {
-    newSave();
-}
-};
-<!-- 保存,同时向后台发送请求保存数据 关闭弹框 -->
-var token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
-
-function newSave(){
-    let name = document.querySelector("#env-name");
-    let host = document.querySelector("#env-host");
-    let dec = document.querySelector("#env-description");
-    let pas = JSON.stringify({"name":name.value, "host_url": host.value, "env_description": dec.value});
-    let xttp = new XMLHttpRequest();
-    xttp.open("POST","./autotest/env_add/",true);
-    xttp.setRequestHeader("X-CSRFToken",token);
-    xttp.setRequestHeader("X-Requested-With","XMLHttpRequest");
-    xttp.send(pas)
-    xttp.onreadystatechange =function () {
-        if (this.readyState==4 && this.status == 200){
-            name.value='';
-            host.value='';
-            dec.value='';
-            ne.style.display = 'none';
-            allData(envUrl);
-        }
-        else{
-            ne.style.display = 'none';
-        }
-    }
-}
+selected(envUrl, envB);
 <!-- 点击查询项目配置 -->
 var temp = `<tr class="env-list-data">
     <td name="list-env-id">{id}</td>
@@ -58,6 +13,43 @@ var temp = `<tr class="env-list-data">
         <button class="env-edit">编辑</button>
         <button class="env-delete">删除</button></td>
     </tr>`;
+//项目配置被选中效果
+<!-- 公用函数 -->
+<!-- 新增测试环境 -->
+document.getElementsByClassName("add-button")[0].onclick = function(){
+    // document.querySelector("#list-env-id").value='';
+    document.querySelector("#env-name").value='';
+    document.querySelector("#env-host").value='';
+    document.querySelector("#env-description").value='';
+    addWin.style.display = 'block';
+    document.querySelector(".save-new-but").onclick=function () {
+    newSave();
+}
+};
+<!-- 保存,同时向后台发送请求保存数据 关闭弹框 -->
+function newSave(){
+    let name = document.querySelector("#env-name");
+    let host = document.querySelector("#env-host");
+    let dec = document.querySelector("#env-description");
+    let pas = JSON.stringify({name:name.value, host_url: host.value, env_description: dec.value});
+    let xttp = new XMLHttpRequest();
+    xttp.open("POST","./autotest/env_add/",true);
+    xttp.setRequestHeader("X-CSRFToken",token);
+    xttp.setRequestHeader("X-Requested-With","XMLHttpRequest");
+    xttp.send(pas)
+    xttp.onreadystatechange =function () {
+        if (this.readyState==4 && this.status == 200){
+            name.value='';
+            host.value='';
+            dec.value='';
+            addWin.style.display = 'none';
+            allData(envUrl);
+        }
+        else{
+            addWin.style.display = 'none';
+        }
+    }
+}
 // <!-- 如果要放在标签的写法 -->
 //var temp= document.querySelector('tbody').innerHTML
 // {#console.log(temp)#}
@@ -101,7 +93,7 @@ function oldSave(ids) {
         })
             .then(response => response.json())
             .then(data => {console.log("Success",data);
-        ne.style.display = 'none';
+        addWin.style.display = 'none';
         allData(envUrl);
         }).catch((error) => {console.error('Error:', error);
         });

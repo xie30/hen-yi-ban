@@ -25,7 +25,6 @@ def hello(request):
 
 @login_check
 def home(request):
-    print("5555")
     return render(request, './templates/home.html')
 
 

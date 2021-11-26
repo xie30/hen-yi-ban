@@ -11,6 +11,7 @@ urlpatterns = [
     re_path(r"env_delete/$", views.env_delete, name="env_delete"),
     re_path(r"env_modify/$", views.env_modify, name="env_modify"),
     re_path(r"^project/$", views.project, name="project"),
-
+    re_path(r"^projects/$", views.projects, name="projects"),
+    re_path(r"^mokuai/$", views.mokuai, name="mokuai"),
     #参数模式？
 ]
