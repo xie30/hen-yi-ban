@@ -46,6 +46,7 @@ function allData(url){
             })
         .then(response => response.json())
         .then(data => {
+            console.log(data)
             createList(data);
     })
         .catch((error)=>{
@@ -68,7 +69,7 @@ function createList(data) {
 }
 //新增点击保存按钮
 function Save(url, pas) {
-    console.log(url, pas)
+    //console.log(url, pas)
     fetch(url,{
         method:"POST",
         headers:{"X-CSRFToken":token,"X-Requested-With":"XMLHttpRequest"},

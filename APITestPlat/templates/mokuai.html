@@ -19,7 +19,7 @@
                     <p>创建人：<input type="text" id="m_creator"></p>
                     <p>项 &nbsp目&nbsp：<select class="p_selected">
                         {% for foo in pro %}
-                           <option id={{ foo.id }}>{{ foo.name }}</option>
+                           <option value={{ foo.id }}>{{ foo.name }}</option>
                         {% endfor %}
                     </select></p>
                 </div>

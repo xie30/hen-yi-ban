@@ -1,6 +1,5 @@
 # Create your views here.
 
-
 import datetime
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
@@ -11,6 +10,9 @@ from myadmin.views import login_check
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+
+delete_msg = {"msg": "delete success", "code": "40010"}
+update_msg = {"msg": "update success", "code": "20010"}
 
 
 def deal_data(data):
@@ -74,8 +76,7 @@ def env_delete(request):
         envs = json.loads(request.body)
         # print (env)
         models.RunEnv.objects.filter(name=envs["name"]).delete()
-        msg = {"msg": "success", "code": "40010"}
-        return JsonResponse(msg)
+        return JsonResponse(delete_msg)
     # return render(requset, "./templates/home.html")
 
 
@@ -94,7 +95,7 @@ def project(request):
 def projects(request):
     """
     访问项目 and 查询项目的所有数据 and 新增项目 and 删除项目
-    :param requset:
+    :param request:
     :return:
     """
     if request.method == "POST":
@@ -117,8 +118,7 @@ def projects(request):
     elif request.method == "DELETE":
         req = json.loads(request.body)
         models.Project.objects.filter(id=req["id"]).delete()
-        msg = {"msg": "delete success", "code": "40010"}
-        return JsonResponse(msg)
+        return JsonResponse(delete_msg)
     else:
         if not request.is_ajax():
             return render(request, './templates/project.html')
@@ -132,21 +132,44 @@ def mokuai(request):
     :param request:
     :return:
     """
-    if not request.is_ajax():
+    if request.method == "GET" and not request.is_ajax():
         # 查询所有项目返回
         # 所有数据的QuerySet对象
         pro_list = models.Project.objects.all()
-        # print(pro_list)
-        # for p in pro_list:
-        #     print(p.id)
         return render(request, "./templates/mokuai.html", {"pro": pro_list})
     elif request.method == "GET" and request.is_ajax():
+        # mo循环了是字典，用all可以
         mo = models.MoKuai.objects.values()
         res = deal_data(mo)
+        # 这里要根据项目的id，查询到项目的名字返回在页面上显示
+        # moo = models.MoKuai.objects.all()
+        # for i in moo:
+        #     print(i.id, i.project.name)
+        # m_pro = models.MoKuai.objects.values("project__name")
+        # print(m_pro)
+        for i in range(len(res["data"])):
+            m_pro = models.Project.objects.filter(id=res["data"][i]["project_id"]).get()
+            res["data"][i]["m_pro"] = m_pro.name
         return JsonResponse(res)
     elif request.method == "POST":
-        pass
-        # 怎么整合一起？
-
+        req = json.loads(request.body)
+        if "id" in req:
+            # models ---> project多对一
+            qm = models.MoKuai.objects.filter(id=req["id"])
+            qm.update(name=req["m_name"], m_description=req["m_description"], m_creator=req["m_creator"],
+                      m_tester=req["m_tester"], project_id=req["m_pro"], update_time=datetime.datetime.now())
+            return JsonResponse(update_msg)
+        else:
+            # models ---> project多对一  \\\先实例化外键查询
+            # https: // www.cnblogs.com / hanbowen / p / 9566787.html
+            # print(type(req["m_proName"]))
+            # pname = models.Project.objects.get(name=req["m_proName"]) 通过id匹配
+            models.MoKuai.objects.create(name=req["m_name"], m_description=req["m_description"],
+                                         m_creator=req["m_creator"], m_tester=req["m_tester"], project_id=req["m_pro"])
+            return JsonResponse(data={"msg": req}, status=200)
+    elif request.method == "DELETE":
+        req = json.loads(request.body)
+        models.MoKuai.objects.filter(req["id"]).delete()
+        return JsonResponse(delete_msg)
     else:
         pass
