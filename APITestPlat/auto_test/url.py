@@ -13,5 +13,7 @@ urlpatterns = [
     re_path(r"^project/$", views.project, name="project"),
     re_path(r"^projects/$", views.projects, name="projects"),
     re_path(r"^mokuai/$", views.mokuai, name="mokuai"),
+    re_path(r"^case/$", views.case, name="case"),
+    re_path(r"^edit_case/$", views.edit_case, name="edit_case"),
     #参数模式？
 ]

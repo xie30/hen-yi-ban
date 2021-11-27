@@ -88,7 +88,7 @@ function Del(id, url){
     fetch(url,{
         method:"DELETE",
         headers:{"X-CSRFToken":token,"X-Requested-With":"XMLHttpRequest"},
-        body:JSON.stringify({"id": id}),
+        body:JSON.stringify({id: id}),
     })
     .then(response => response.json())
     .then(data => {

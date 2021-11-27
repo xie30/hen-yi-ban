@@ -22,6 +22,16 @@ def deal_data(data):
     return rep
 
 
+def delete(request):
+    req = json.loads(request.body)
+    models.MoKuai.objects.filter(id=req["id"]).delete()
+    return JsonResponse(delete_msg)
+
+
+def all_data(request):
+    """用于查询所有数据并用json格式返回"""
+    pass
+
 @login_check
 def env(request):
     # 查询env表并返回数据
@@ -116,9 +126,7 @@ def projects(request):
         req = deal_data(pro)
         return JsonResponse(req)
     elif request.method == "DELETE":
-        req = json.loads(request.body)
-        models.Project.objects.filter(id=req["id"]).delete()
-        return JsonResponse(delete_msg)
+        return delete(request)
     else:
         if not request.is_ajax():
             return render(request, './templates/project.html')
@@ -161,15 +169,27 @@ def mokuai(request):
             return JsonResponse(update_msg)
         else:
             # models ---> project多对一  \\\先实例化外键查询
-            # https: // www.cnblogs.com / hanbowen / p / 9566787.html
+            # ORM查询操作详解：https://www.cnblogs.com/hanbowen/p/9566787.html
             # print(type(req["m_proName"]))
             # pname = models.Project.objects.get(name=req["m_proName"]) 通过id匹配
             models.MoKuai.objects.create(name=req["m_name"], m_description=req["m_description"],
                                          m_creator=req["m_creator"], m_tester=req["m_tester"], project_id=req["m_pro"])
             return JsonResponse(data={"msg": req}, status=200)
     elif request.method == "DELETE":
-        req = json.loads(request.body)
-        models.MoKuai.objects.filter(req["id"]).delete()
-        return JsonResponse(delete_msg)
+        return delete(request)
     else:
         pass
+
+
+@login_check
+def case(request):
+    """
+    :param request:
+    :return: 查询case表，并返回所有的数据
+    """
+    pass
+
+
+@login_check
+def edit_case(request):
+    pass
