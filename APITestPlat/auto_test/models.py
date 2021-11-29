@@ -66,14 +66,8 @@ class CaseList(models.Model):
     creator = models.CharField(max_length=50)
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
-<<<<<<< HEAD
     # execution_time = models.DateTimeField() #如何每次执行的时候触发这个字段更新？
-    #增加字段支持上传附件的接口？
-=======
-    execution_time = models.DateTimeField()  # 如何每次执行的时候触发这个字段更新？
     # 增加字段支持上传附件的接口？
->>>>>>> 0a175a16460709b7b39c326822802d2eb0b809be
-
     # case ---> project_name 多对一
     # case ---> model_name 多对一，涉及到清空时，null参数必须要设置为true
     project = models.ForeignKey("Project", on_delete=models.CASCADE, null=True)
