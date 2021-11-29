@@ -31,8 +31,51 @@ document.querySelector(".add-button").onclick =function () {
     addWin.style.display = "block";
     document.querySelector(".save-but").onclick = function () {
         let pas = JSON.stringify({m_name:name.value, m_description:Description.value,
-        m_tester:tester.value, m_creator:creator.value, m_proName:proName});
+        m_tester:tester.value, m_creator:creator.value, m_pro:proName.value});
         //console.log(pas)
         Save(moUrl,pas);
     }
+}
+
+//点击编辑和删除
+var t =document.querySelector(".set-contents")
+t.addEventListener("click",(event)=> {
+    if (event.target.classList.contains("delete")) {
+        let deEnv = event.target.parentNode.parentNode;
+        let id = deEnv.querySelector("[name='list-mo-id']").innerText;
+        Del(id,moUrl);
+    }
+    if (event.target.classList.contains("edit")) {
+        moEditSave(event);
+    }
+})
+function moEditSave(event) {
+    let edEnv = event.target.parentNode.parentNode;
+    let moId = edEnv.querySelector("[name='list-mo-id']").innerText
+    let moName = edEnv.querySelector("[name='list-mo-name']").innerText;
+    let moDec = edEnv.querySelector("[name='list-dec']").innerText;
+    let moTester = edEnv.querySelector("[name='list-tester']").innerText;
+    let moCreator = edEnv.querySelector("[name='list-creator']").innerText;
+    let pro = edEnv.querySelector("[name='list-pro']").innerText;
+    addWin.style.display = 'block';
+    name.value = moName;
+    Description.value = moDec;
+    tester.value = moTester;
+    creator.value = moCreator;
+    proName.value = pro;
+    //新增的时候的save按钮也从这里执行了？
+    // 可以自定义弹框的类型，然后把类型值传给(".env-save-but").onclick函数内部判断执行哪个方法/又或者两个触发事件都放到弹框触发的函数中
+    document.querySelector(".save-but").onclick=function () {
+        moOldSave(moId);
+    }
+}
+function moOldSave(id) {
+    let newName = name.value;
+    let newDec = Description.value;
+    let newTester = tester.value;
+    let newCreator = creator.value;
+    let newPro = proName.value;
+    let params = JSON.stringify({id: id, m_name: newName,m_description: newDec,m_creator:newCreator,
+        m_tester:newTester,m_pro:newPro})
+    Save(moUrl, params);
 }
