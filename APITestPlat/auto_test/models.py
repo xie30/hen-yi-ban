@@ -52,15 +52,15 @@ class CaseList(models.Model):
     method = models.CharField(max_length=20)
     re_header = models.TextField()  #
     param_type = models.CharField(max_length=15)
-    params = models.CharField(max_length=10000)
-    check = models.CharField(max_length=1000)
+    params = models.TextField()
+    check = models.TextField()
     check_type = models.CharField(max_length=15)
     case_description = models.TextField(blank=True)
-    result = models.BooleanField(blank=True, null=True)
+    status = models.BooleanField(default=1,verbose_name="状态")
     creator = models.CharField(max_length=50)
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
-    execution_time = models.DateTimeField() #如何每次执行的时候触发这个字段更新？
+    # execution_time = models.DateTimeField() #如何每次执行的时候触发这个字段更新？
     #增加字段支持上传附件的接口？
 
     # case ---> project_name 多对一
