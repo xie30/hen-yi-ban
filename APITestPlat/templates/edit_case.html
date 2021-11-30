@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}用例{% endblock %}
+{% block content %}
+    <div class="edit-case">
+        <div class="edit-case-content">
+            <div class="edit-case-title">
+                <ul>
+                    <li>用 例 名&nbsp：<input></li>
+                    <li>接 &nbsp &nbsp口&nbsp：<input></li>
+                    <li>请求方法:
+                        <select>
+                            <option>GET</option>
+                            <option>POST</option>
+                            <option>PUT</option>
+                            <option>DELETE</option>
+                        </select>
+                    </li>
+                    <li>Headers：<input></li>
+                    <li>参数类型：
+                        <select>
+                            <option>json</option>
+                            <option>params</option>
+                            <option>data</option>
+                            <option>form-data</option>
+                        </select>
+                    </li>
+                    <li>参 &nbsp &nbsp 数：<textarea></textarea></li>
+                    <li>断 &nbsp &nbsp 言：<input></li>
+                    <li>断言类型：
+                        <select>
+                            <option>包含</option>
+                            <option>等于</option>
+                        </select>
+                    </li>
+                    <li>项&nbsp&nbsp&nbsp&nbsp目：</li>
+                    <li>模&nbsp&nbsp&nbsp&nbsp块：</li>
+                </ul>
+            </div>
+            <div class="edit-button">
+                <button>保存</button>
+                <button>取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/base.js"></script>
+    <script src="/static/js/edit_case.js"></script>
+{% endblock %}

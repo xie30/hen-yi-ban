@@ -60,7 +60,7 @@ var t =document.querySelector(".set-contents")
 t.addEventListener("click",(event)=> {
     if (event.target.classList.contains("env-delete")) {
         let deEnv = event.target.parentNode.parentNode;
-        let na = deEnv.querySelector("[name='list-env-name']").innerText;
+        let na = deEnv.querySelector("[name='list-env-id']").innerText;
         envDel(na);
     }
     if (event.target.classList.contains("env-edit")) {
@@ -99,11 +99,11 @@ function oldSave(ids) {
         });
  }
 
-function envDel(name){
+function envDel(id){
     fetch("./autotest/env_delete/",{
         method:"DELETE",
         headers:{"X-CSRFToken":token,"X-Requested-With":"XMLHttpRequest"},
-        body:JSON.stringify({name: name}),
+        body:JSON.stringify({id: id}),
     })
     .then(response => response.json())
     .then(data => {

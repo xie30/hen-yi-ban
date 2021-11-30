@@ -15,4 +15,8 @@ var temp = `<tr class="pro-list-data">
         <button class="edit">编辑</button>
         <button class="delete">删除</button></td>
     </tr>`;
-// selected(cUrl, cases);
+selected(cUrl, cases);
+
+
+
+

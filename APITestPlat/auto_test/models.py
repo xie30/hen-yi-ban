@@ -72,7 +72,7 @@ class CaseList(models.Model):
     # case ---> model_name 多对一，涉及到清空时，null参数必须要设置为true
     project = models.ForeignKey("Project", on_delete=models.CASCADE, null=True)
     model = models.ForeignKey("MoKuai", on_delete=models.CASCADE, null=True)
-    # case --->suite 多对一
+    # case --->suite 多对一？？？应该是多对多
     suite = models.ForeignKey("TestSuite", on_delete=models.CASCADE, null=True)
 
 

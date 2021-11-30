@@ -1,14 +1,14 @@
 # Create your views here.
 
-import datetime, json
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
+import datetime
+import json
+
+from django.http import JsonResponse
+from django.shortcuts import render
+
 from auto_test import models
-from auto_test.models import RunEnv, Project
+from auto_test.models import RunEnv, Project, MoKuai, CaseList
 from myadmin.views import login_check
-from django.urls import reverse
-from django.contrib.auth.decorators import login_required
-from django.core import serializers
 
 new_msg = {"msg": "saved successfully", "code": "20010"}
 update_msg = {"msg": "update completed", "code": "20020"}
@@ -17,23 +17,26 @@ delete_msg = {"msg": "successfully deleted", "code": "20040"}
 illegal_input_msg = {"error": "illegal input", "code": "40010"}
 
 
+def all_data(request, mod):
+    """用于查询所有数据并用json格式返回"""
+    rep = mod.objects.values()
+    data = deal_data(rep)
+    return data
+
+
 def deal_data(data):
+    """查询到的数据转换成json格式"""
     query_msg["data"] = []
     for i in range(len(data)):
         query_msg["data"].append(data[i])
     return query_msg
 
 
-def delete(request):
+def delete(request, mod):
+    """通过唯一的id删除一条数据"""
     if request.is_ajax():
         req = json.loads(request.body)
-        # 每个库都要实例化？怎么传？才能公用
-        models.MoKuai.objects.filter(id=req["id"]).delete()
-
-
-def all_data(request):
-    """用于查询所有数据并用json格式返回"""
-    pass
+        mod.objects.filter(id=req["id"]).delete()
 
 
 def check_data(s, *args, **kwargs):
@@ -57,9 +60,8 @@ def env(request):
     # 查询env表并返回数据
     # if requset.session.get("is_login"):
     if request.is_ajax():
-        envs = RunEnv.objects.values()
-        req = deal_data(envs)
-        return JsonResponse(req)
+        data = all_data(request, RunEnv)
+        return JsonResponse(data)
     else:
         print("查询失败")
         return render(request, "./templates/home.html")
@@ -95,13 +97,8 @@ def env_modify(request):
 
 @login_check
 def env_delete(request):
-    if request.is_ajax():
-        envs = json.loads(request.body)
-        # print (env)
-        models.RunEnv.objects.filter(name=envs["name"]).delete()
-        return JsonResponse(delete_msg)
-    # return render(requset, "./templates/home.html")
-    # return delete(request)
+    delete(request, RunEnv)
+    return JsonResponse(delete_msg)
 
 
 @login_check
@@ -126,22 +123,20 @@ def projects(request):
         req = json.loads(request.body)
         # print(req, "id" in req)
         if "id" in req:
-            qn = models.Project.objects.filter(id=req["id"])
+            qn = Project.objects.filter(id=req["id"])
             qn.update(name=req["pro_name"], p_description=req["pro_description"],
                       p_creator=req["creator"], p_tester=req["tester"],
                       update_time=datetime.datetime.now())
             return JsonResponse(data=update_msg, status=200)
         else:
-            models.Project.objects.create(name=req["pro_name"], p_description=req["pro_description"],
+            Project.objects.create(name=req["pro_name"], p_description=req["pro_description"],
                                           p_creator=req["creator"], p_tester=req["tester"])
             return JsonResponse(data=new_msg, status=200)
     elif request.method == "GET" and request.is_ajax():
-        pro = models.Project.objects.values()
-        req = deal_data(pro)
-        return JsonResponse(req)
+        data = all_data(request, Project)
+        return JsonResponse(data)
     elif request.method == "DELETE" and request.is_ajax():
-        req = json.loads(request.body)
-        models.Project.objects.filter(id=req["id"]).delete()
+        delete(request, Project)
         return JsonResponse(delete_msg)
     else:
         if not request.is_ajax():
@@ -159,11 +154,11 @@ def mokuai(request):
     if request.method == "GET" and not request.is_ajax():
         # 查询所有项目返回
         # 所有数据的QuerySet对象
-        pro_list = models.Project.objects.all()
+        pro_list = Project.objects.all()
         return render(request, "./templates/mokuai.html", {"pro": pro_list})
     elif request.method == "GET" and request.is_ajax():
         # mo循环了是字典，用all可以
-        mo = models.MoKuai.objects.values()
+        mo = MoKuai.objects.values()
         res = deal_data(mo)
         # 这里要根据项目的id，查询到项目的名字返回在页面上显示
         """
@@ -177,14 +172,13 @@ def mokuai(request):
             if res["data"][i]["project_id"] is None:
                 res["data"][i]["m_pro"] = None
             else:
-                m_pro = models.Project.objects.filter(id=res["data"][i]["project_id"]).get()
+                m_pro = Project.objects.filter(id=res["data"][i]["project_id"]).get()
                 res["data"][i]["m_pro"] = m_pro.name
         return JsonResponse(res)
     elif request.method == "POST":
         return write_mk(request)
     elif request.method == "DELETE":
-        req = json.loads(request.body)
-        models.MoKuai.objects.filter(id=req["id"]).delete()
+        delete(request, MoKuai)
         return JsonResponse(delete_msg)
     else:
         return render(request, "./templates/mokuai.html")
@@ -214,7 +208,8 @@ def write_mk(request):
                 return JsonResponse(data={"msg": str(e)}, status=400)
             return JsonResponse(data=new_msg, status=200)
     else:
-        return JsonResponse(data={"msg": req}.update(illegal_input_msg), status=400)
+        illegal_input_msg.update({"msg": req})
+        return JsonResponse(data=illegal_input_msg, status=400)
 
 
 @login_check
@@ -226,11 +221,13 @@ def case(request):
     if request.method == "GET" and not request.is_ajax():
         return render(request, "./templates/case_list.html")
     elif request.method == "GET" and request.is_ajax():
-        pass
+        data = all_data(request, CaseList)
+        return JsonResponse(data)
     else:
         pass
 
 
 @login_check
 def edit_case(request):
-    pass
+    # 返回编辑用例页面
+    return render(request, "./templates/edit_case.html")
