@@ -3,9 +3,9 @@ var token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
 // titles选中效果并默认查询全部数据显示
 function selected(url, h) {
     //查询数据并返回创建一个临时table
-    allData(url)
+    allData(url);
     //变量可以从base.js继承过来
-    s(h)
+    s(h);
 }
 function s(h) {
     h.style.fontSize="21px";
@@ -30,13 +30,6 @@ document.querySelector("#logout-but").onclick = function () {
 }
 //取消和关闭新增的输入弹框
 var addWin = document.querySelector(".add-win");
-function find(yuan) {
-     document.querySelector(yuan).onclick= function () {
-         addWin.style.display = 'none';
-     }
-}
-find("#close-but");
-find(".cancel-but");
 
 <!-- 查询全部数据的函数-->
 function allData(url){
@@ -46,7 +39,7 @@ function allData(url){
             })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            //console.log(data);
             createList(data);
     })
         .catch((error)=>{
@@ -77,7 +70,9 @@ function Save(url, pas) {
     })
     .then(response => response.json())
         .then(data=>{
-            if (data["status"]=200){
+            //console.log(data["code"])
+            if ( data["code"] === "20010" || data["code"] === "20020"){
+                //console.log("6666")
                 addWin.style.display = 'none';
                 allData(url)
             }
@@ -109,17 +104,20 @@ document.querySelector(".setting").onclick = function(){
 
 
 //project项目
-var projects = document.querySelector(".project span")
+var projects = document.querySelector(".project span");
 document.querySelector(".project").onclick = function () {
-    let pro = "/home/autotest/projects/";
     // getNotAjaxJump(pro);会导致多次请求
-    window.location.href = pro
+    window.location.href = "/home/autotest/projects/";
     //刷新了页面之后，页面的所有临时的效果都会被清空
-}
+};
 
 //模块
-var mokuai = document.querySelector(".mokuai span")
+var mokuai = document.querySelector(".mokuai span");
 document.querySelector(".mokuai").onclick = function () {
-    let mk = "/home/autotest/mokuai/"
-    window.location.href = mk
-}
+    window.location.href = "/home/autotest/mokuai/";
+};
+//用例
+var cases = document.querySelector("case-list span");
+document.querySelector(".case-list").onclick = function () {
+    window.location.href = "/home/autotest/case";
+};

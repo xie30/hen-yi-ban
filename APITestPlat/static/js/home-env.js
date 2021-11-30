@@ -73,13 +73,13 @@ function editSave(event) {
     let name = edEnv.querySelector("[name='list-env-name']").innerText;
     let host = edEnv.querySelector("[name='list-host']").innerText;
     let dec = edEnv.querySelector("[name='list-dec']").innerText;
-    ne.style.display = 'block';
+    addWin.style.display = 'block';
     document.querySelector("#env-name").value = name;
     document.querySelector("#env-host").value = host;
     document.querySelector("#env-description").value = dec;
     //新增的时候的save按钮也从这里执行了？
     // 可以自定义弹框的类型，然后把类型值传给(".env-save-but").onclick函数内部判断执行哪个方法/又或者两个触发事件都放到弹框触发的函数中
-    document.querySelector(".env-save-but").onclick=function () {
+    document.querySelector(".save-but").onclick=function () {
         oldSave(ids);
 }
 }
