@@ -13,7 +13,10 @@ var temp = `<tr class="pro-list-data">
     <td name="list-uptime">{update_time}</td>
     <td class="list-op">
         <button class="edit">编辑</button>
-        <button class="delete">删除</button></td>
+        <button class="delete">删除</button>
+        <button class="run-case">运行</button>
+        </td>
+        
     </tr>`;
 selected(cUrl, cases);
 
