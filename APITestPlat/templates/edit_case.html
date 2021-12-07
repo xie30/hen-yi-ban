@@ -5,6 +5,7 @@
         <div class="edit-case-content">
             <div class="edit-case-title">
                 <ul class="edit-case">
+                    <li>前置用例</li>
                     <li class="edit-case-list">用 例 名&nbsp：<input></li>
                     <li class="edit-case-list">接 &nbsp口Url：<input></li>
                     <li class="edit-case-list">请求方法：
@@ -39,16 +40,11 @@
                         <input type="checkbox">
                         断 &nbsp &nbsp 言：<input>
                         <select class="selects">
-                            <option>包含</option>
-                            <option>等于</option>
-                            <option>大于</option>
-                            <option>小于</option>
-                        </select>
-                        <select class="selects">
-                            <option>string</option>
-                            <option>int</option>
-                            <option>float</option>
-                            <option>boolean</option>
+                            <option>in</option>
+                            <option>==</option>
+                            <option>!=</option>
+                            <option> > </option>
+                            <option> < </option>
                         </select>
                         <input>
                     </li>
@@ -72,7 +68,7 @@
             </div>
         </div>
     </div>
-
+{#    用例依赖和多个用例组合成一个执行？#}
     <script src="/static/js/base.js"></script>
     <script src="/static/js/edit_case.js"></script>
 {% endblock %}
