@@ -230,4 +230,10 @@ def case(request):
 @login_check
 def edit_case(request):
     # 返回编辑用例页面
-    return render(request, "./templates/edit_case.html")
+    if request.method == "GET":
+        mo = all_data(request, MoKuai)
+        d = {"mof": mo["data"]}
+        po = all_data(request, Project)  # 这里用的是.value的方法，与all有区别
+        # 连续调用两次，mo、po的值最后都是取了po？？？-暂时用字典赋值处理下
+        d["pof"] = po["data"]
+        return render(request, "./templates/edit_case.html", {"mof": d["mof"], "pof": d["pof"]})

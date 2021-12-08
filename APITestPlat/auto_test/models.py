@@ -53,14 +53,14 @@ class CaseList(models.Model):
     """
     用例
     """
+    include = models.CharField('前置config/test', max_length=1024, null=True)
     name = models.CharField(max_length=188, unique=True)
-    url = models.CharField(max_length=10000)
+    url = models.CharField(max_length=3000)
     method = models.CharField(max_length=20)
-    re_header = models.TextField()  #
+    re_header = models.TextField(blank=True)  #
     param_type = models.CharField(max_length=15)
-    params = models.TextField()
-    check = models.TextField()
-    check_type = models.CharField(max_length=15)
+    params = models.TextField(blank=True)
+    check = models.TextField(null=True)
     case_description = models.TextField(blank=True)
     status = models.BooleanField(default=1,verbose_name="状态")
     creator = models.CharField(max_length=50)

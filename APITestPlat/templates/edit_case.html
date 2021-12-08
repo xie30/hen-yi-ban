@@ -5,7 +5,7 @@
         <div class="edit-case-content">
             <div class="edit-case-title">
                 <ul class="edit-case">
-                    <li>前置用例</li>
+
                     <li class="edit-case-list">用 例 名&nbsp：<input></li>
                     <li class="edit-case-list">接 &nbsp口Url：<input></li>
                     <li class="edit-case-list">请求方法：
@@ -50,15 +50,29 @@
                     </li>
                     <li class="edit-case-list" id="pro">项&nbsp&nbsp&nbsp&nbsp目：
                         <select class="selects">
-                            <option></option>
-                            <option></option>
+                            {% for pos in pof %}
+                                <option>{{ pos.name }}</option>
+                            {% endfor %}
                         </select>
                     </li>
                     <li class="edit-case-list" id="mokuai">模&nbsp&nbsp&nbsp&nbsp块：
                         <select class="selects">
+                            {% for mos in mof %}
+                                <option>{{ mos.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </li>
+                    <li>前置用例
+                        <select class="selects">
                             <option></option>
                             <option></option>
                         </select>
+                    </li>
+                    <li>全局变量:
+                        <div>
+                            变量名<input>
+                            获取变量规则<input>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -68,7 +82,7 @@
             </div>
         </div>
     </div>
-{#    用例依赖和多个用例组合成一个执行？#}
+{#    用例依赖和多个用例组合成一个执行？https://www.cnblogs.com/chenxiaomeng/p/15417888.html#}
     <script src="/static/js/base.js"></script>
     <script src="/static/js/edit_case.js"></script>
 {% endblock %}

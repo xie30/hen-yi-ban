@@ -121,8 +121,3 @@ var cases = document.querySelector(".case-list span");
 document.querySelector(".case-list").onclick = function () {
     window.location.href = "/home/autotest/case/";
 };
-
-//新增用例
-document.querySelector(".add-button").onclick = function () {
-    window.location.href = "/home/autotest/edit_case/";
-}

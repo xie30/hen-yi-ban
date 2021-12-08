@@ -21,5 +21,11 @@ var temp = `<tr class="pro-list-data">
 selected(cUrl, cases);
 
 
+//新增用例
+document.querySelector(".add-button").onclick = function () {
+    window.location.href = "/home/autotest/edit_case/";
+}
+
+
 
 
