@@ -1,5 +1,5 @@
 '''
-需求分析：2021-07-07 author：daxian
+需求分析： author：daxian
 接口测试自动化平台：
     --V1版本基于diango框架，利用template实现前端；
     --V2版本，基于django rest framework+一个简单的前端框架
