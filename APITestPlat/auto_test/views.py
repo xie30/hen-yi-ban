@@ -218,11 +218,22 @@ def case(request):
     :param request:
     :return: 查询case表，并返回所有的数据
     """
+
     if request.method == "GET" and not request.is_ajax():
         return render(request, "./templates/case_list.html")
     elif request.method == "GET" and request.is_ajax():
         data = all_data(request, CaseList)
         return JsonResponse(data)
+    elif request.method == "POST" and not request.is_ajax():
+        req = json.loads(request.body)
+        if "id" in req:
+            pass
+        else:
+            CaseList.objects.create(include=req["include"], name=req["name"], url=req["url"], method=req["method"],
+                                    re_header=req["re_header"], param_type=req["param_type"], params=req["params"],
+                                    check=req["check"], case_description=req["case_description"], status=req["status"],
+                                    creator=req["creator"])
+            return JsonResponse(data=new_msg, status=200)
     else:
         pass
 
