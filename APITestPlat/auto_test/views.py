@@ -230,8 +230,8 @@ def case(request):
             pass
         else:
             CaseList.objects.create(include=req["include"], name=req["name"], url=req["url"], method=req["method"],
-                                    re_header=req["re_header"], param_type=req["param_type"], params=req["params"],
-                                    check=req["check"], case_description=req["case_description"], status=req["status"],
+                                    re_header=req["re_header"], param_type=req["param_types"], params=req["params"],
+                                    check=req["check"],
                                     creator=req["creator"])
             return JsonResponse(data=new_msg, status=200)
     else:

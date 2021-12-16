@@ -61,7 +61,6 @@ class CaseList(models.Model):
     param_type = models.CharField(max_length=15)
     params = models.TextField(blank=True)
     check = models.TextField(null=True)
-    case_description = models.TextField(blank=True)
     status = models.BooleanField(default=1,verbose_name="状态")
     creator = models.CharField(max_length=50)
     create_time = models.DateTimeField(auto_now_add=True)
