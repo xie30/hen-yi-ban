@@ -117,7 +117,25 @@ document.querySelector(".mokuai").onclick = function () {
     window.location.href = "/home/autotest/mokuai/";
 };
 //用例
+var caseUrl = "/home/autotest/case/";
 var cases = document.querySelector(".case-list span");
 document.querySelector(".case-list").onclick = function () {
-    window.location.href = "/home/autotest/case/";
+    window.location.href = caseUrl;
 };
+//用例保存函数
+function caseSave(data) {
+    fetch(caseUrl,{
+        method:'POST',
+        headers:{"X-CSRFToken": token},
+        body: data
+    })
+        .then(response => response.json())
+        .then(data => {console.log("Success",data);
+        // 请求成功需要返回查询列表？？
+        if (data['code'] == '20010'){
+            window.location.href = caseUrl;
+        }
+
+        }).catch((error) => {console.error('Error:', error);
+        });
+}

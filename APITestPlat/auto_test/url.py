@@ -15,5 +15,7 @@ urlpatterns = [
     re_path(r"^mokuai/$", views.mokuai, name="mokuai"),
     re_path(r"^case/$", views.case, name="case"),
     re_path(r"^edit_case/$", views.edit_case, name="edit_case"),
+    re_path(r"^runcase/$", views.run_case, name="run_case"),
+
     #参数模式？
 ]

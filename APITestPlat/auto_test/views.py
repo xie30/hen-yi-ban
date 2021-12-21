@@ -9,12 +9,14 @@ from django.shortcuts import render
 from auto_test import models
 from auto_test.models import RunEnv, Project, MoKuai, CaseList
 from myadmin.views import login_check
+from auto_test.thread import CaseThread
 
 new_msg = {"msg": "saved successfully", "code": "20010"}
 update_msg = {"msg": "update completed", "code": "20020"}
 query_msg = {"msg": "query successfully", "code": "20030", "data": []}
-delete_msg = {"msg": "successfully deleted", "code": "20040"}
+delete_msg = {"msg": "deleted successfully", "code": "20040"}
 illegal_input_msg = {"error": "illegal input", "code": "40010"}
+run_msg = {"msg": "running", "code": "30010"}
 
 
 def all_data(request, mod):
@@ -37,6 +39,26 @@ def delete(request, mod):
     if request.is_ajax():
         req = json.loads(request.body)
         mod.objects.filter(id=req["id"]).delete()
+
+
+def get_data(data, mos, **d_f_name):
+    """
+    通过id获取对应的模型中的name字段,整理出完整的数据给前端
+    :param data:需要查询的模型的数据
+    :param mos:根据id需要查询对应实例化name字段的模型
+    :param d:mo中，多对一的实例化属性
+    :param f_name:返回给前端显示对应的字段
+    :return:根据id返回对应的实例化
+    """
+    if d_f_name:
+        for d, j in d_f_name.items():
+            for i in range(len(data["data"])):
+                if data["data"][i][d] is None:
+                    data["data"][i][j] = None
+                else:
+                    d_name = mos.objects.filter(id=data["data"][i][d]).get()
+                    data["data"][i][j] = d_name.name
+        return data
 
 
 def check_data(s, *args, **kwargs):
@@ -130,7 +152,7 @@ def projects(request):
             return JsonResponse(data=update_msg, status=200)
         else:
             Project.objects.create(name=req["pro_name"], p_description=req["pro_description"],
-                                          p_creator=req["creator"], p_tester=req["tester"])
+                                   p_creator=req["creator"], p_tester=req["tester"])
             return JsonResponse(data=new_msg, status=200)
     elif request.method == "GET" and request.is_ajax():
         data = all_data(request, Project)
@@ -159,21 +181,22 @@ def mokuai(request):
     elif request.method == "GET" and request.is_ajax():
         # mo循环了是字典，用all可以
         mo = MoKuai.objects.values()
-        res = deal_data(mo)
-        # 这里要根据项目的id，查询到项目的名字返回在页面上显示
-        """
-        如果前端没有校验必填，name字段可以="",而且project_id可以为none，导致会出现一些查询错误？？？？
-        --创建数据或者更新数据，后台需要校验错误的数据
-        --https://www.cnblogs.com/hello-wei/p/12504548.html
-        """
-        # models ---> project多对一, 项目一旦被删除，id就是none了，查询不到数据，需要处理？--
-        # print(res["data"][0]["project_id"])
-        for i in range(len(res["data"])):
-            if res["data"][i]["project_id"] is None:
-                res["data"][i]["m_pro"] = None
-            else:
-                m_pro = Project.objects.filter(id=res["data"][i]["project_id"]).get()
-                res["data"][i]["m_pro"] = m_pro.name
+        data = deal_data(mo)
+        # # 这里要根据项目的id，查询到项目的名字返回在页面上显示
+        # """
+        # 如果前端没有校验必填，name字段可以="",而且project_id可以为none，导致会出现一些查询错误？？？？
+        # --创建数据或者更新数据，后台需要校验错误的数据
+        # --https://www.cnblogs.com/hello-wei/p/12504548.html
+        # """
+        # # models ---> project多对一, 项目一旦被删除，id就是none了，查询不到数据，需要处理？--
+        # # print(res["data"][0]["project_id"])
+        # for i in range(len(res["data"])):
+        #     if res["data"][i]["project_id"] is None:
+        #         res["data"][i]["m_pro"] = None
+        #     else:
+        #         m_pro = Project.objects.filter(id=res["data"][i]["project_id"]).get()
+        #         res["data"][i]["m_pro"] = m_pro.name
+        res = get_data(data, Project, project_id="m_pro")
         return JsonResponse(res)
     elif request.method == "POST":
         return write_mk(request)
@@ -223,17 +246,26 @@ def case(request):
         return render(request, "./templates/case_list.html")
     elif request.method == "GET" and request.is_ajax():
         data = all_data(request, CaseList)
+        # print(data)
+        # 模块和项目，在case表中，多对一，存的是id，需要根据id到对应的表查询到对应的数据返回给前端显示
+        # get——data函数要怎么改，让下面调用两次变成一次？？？
+        data = get_data(data, Project, project_id="pros")
+        data = get_data(data, MoKuai, model_id="mokuais")
         return JsonResponse(data)
     elif request.method == "POST" and not request.is_ajax():
         req = json.loads(request.body)
         if "id" in req:
             pass
         else:
-            CaseList.objects.create(include=req["include"], name=req["name"], url=req["url"], method=req["method"],
+            CaseList.objects.create(include=req["include"], name=req["name"], url=req["url"], method=req["methods"],
                                     re_header=req["re_header"], param_type=req["param_types"], params=req["params"],
-                                    check=req["check"],
-                                    creator=req["creator"])
+                                    check_key=req["check_key"], check_value=req["check_value"],
+                                    assert_type=req["assert_type"], creator=req["creator"],
+                                    project_id=req["pros"], model_id=req['mokuais'])
             return JsonResponse(data=new_msg, status=200)
+    elif request.method == "DELETE" and request.is_ajax():
+        delete(request, CaseList)
+        return JsonResponse(delete_msg)
     else:
         pass
 
@@ -248,3 +280,13 @@ def edit_case(request):
         # 连续调用两次，mo、po的值最后都是取了po？？？-暂时用字典赋值处理下
         d["pof"] = po["data"]
         return render(request, "./templates/edit_case.html", {"mof": d["mof"], "pof": d["pof"]})
+
+
+@login_check
+def run_case(requset):
+    """运行单个用例"""
+    # 需要多线程运行。第一步要生成对应的测试用例json文件；第二步是调用unittest框架执行并生成测试报告
+    if requset.method == "POST" and requset.is_ajax():
+        req = json.loads(requset.body)
+        CaseThread(req["id"]).run()
+        return JsonResponse(run_msg)

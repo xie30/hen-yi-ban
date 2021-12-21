@@ -5,8 +5,8 @@
         <div class="edit-case-content">
             <div class="edit-case-title">
                 <ul class="edit-case">
-                    <li class="edit-case-list">用 例 名&nbsp：<input id="name"></li>
-                    <li class="edit-case-list">接 &nbsp口Url：<input id="url"></li>
+                    <li class="edit-case-list">用 例 名&nbsp：<input id="name" required="required"></li>
+                    <li class="edit-case-list">接 &nbsp口Url：<input id="url" required="required"></li>
                     <li class="edit-case-list">请求方法：
                         <select class="selects" id="methods">
                             <option>GET</option>
@@ -36,8 +36,7 @@
                         <textarea id="json-text"></textarea>
                     </li>
                     <li class="edit-case-list">
-                        <input id="check_key">
-                        断 &nbsp &nbsp 言：<input id="check_value">
+                        断 &nbsp &nbsp 言：<input id="check_key">
                         <select class="selects" id="assert_type">
                             <option>in</option>
                             <option>==</option>
@@ -45,19 +44,19 @@
                             <option> > </option>
                             <option> < </option>
                         </select>
-                        <input id="assert-value">
+                        <input id="check_value">
                     </li>
                     <li class="edit-case-list" id="pro">项&nbsp&nbsp&nbsp&nbsp目：
                         <select class="selects" id="pros">
                             {% for pos in pof %}
-                                <option>{{ pos.name }}</option>
+                                <option value={{ pos.id }}>{{ pos.name }}</option>
                             {% endfor %}
                         </select>
                     </li>
                     <li class="edit-case-list" id="mokuai">模&nbsp&nbsp&nbsp&nbsp块：
                         <select class="selects" id="mokuais">
                             {% for mos in mof %}
-                                <option>{{ mos.name }}</option>
+                                <option value={{ mos.id }}>{{ mos.name }}</option>
                             {% endfor %}
                         </select>
                     </li>
