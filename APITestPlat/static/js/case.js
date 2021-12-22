@@ -45,7 +45,10 @@ function caseEditSave(event) {
     //1.先获取现有的值；2、赋值编辑窗口；3.获取到现有修改后的值，保存（调用base中的caseSave）
     window.location.href = editCaseUrl
 }
-//运行用例
+//运行用例，运行之前需要选择执行的环境，把环境url传给后台
+function selectedEnv(){
+
+}
 function caseRun(event) {
     let deCase = event.target.parentNode.parentNode;
     let id = deCase.querySelector("[name='list-case-id']").innerText;

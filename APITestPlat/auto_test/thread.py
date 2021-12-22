@@ -1,11 +1,13 @@
 import json
 import threading
+import os
 
 from auto_test.models import CaseList
 from APITestPlat import settings
 # windows系统需要做路径格式替换
 BASE_DIR = str(settings.BASE_DIR).replace("\\", "/")
 jsonFilePath = BASE_DIR + "/auto_test/caseJson/case_data_list.json"
+cmdPath = BASE_DIR + "/auto_test/"
 
 
 class CaseThread:
@@ -32,7 +34,10 @@ class CaseThread:
         # 永远都是一条数据？？
         with open(jsonFilePath, "w") as f:
             f.write(case_data)
-        #运行用例，生成测试报告
+        # 运行用例，生成测试报告
+        run_cmd = "python " + cmdPath + "run.py"
+        print("运行的命令", run_cmd)
+        os.system(run_cmd)
 
     # def run_tasks(self):
     #     threads = []
