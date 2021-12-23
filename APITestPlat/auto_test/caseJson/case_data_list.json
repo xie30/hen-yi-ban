@@ -1,1 +1,1 @@
-{"23456789098765": {"url": "3", "header": "{'header_key': '4', 'header_value': '5'}", "method": "POST", "param_type": "json", "body": "0", "assert_type": "in", "check_key": "q", "check_value": "w"}}
+{"\u767b\u5f55": {"name": "\u767b\u5f55", "url": "https://ovh.ginolegaltech.com/user/login/", "header": "{'header_key': '', 'header_value': ''}", "method": "GET", "param_type": "params", "body": "0", "assert_type": "in", "check_key": "", "check_value": ""}}

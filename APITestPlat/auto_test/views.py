@@ -243,7 +243,8 @@ def case(request):
     """
 
     if request.method == "GET" and not request.is_ajax():
-        return render(request, "./templates/case_list.html")
+        env_list = RunEnv.objects.all()
+        return render(request, "./templates/case_list.html", {"env_url": env_list})
     elif request.method == "GET" and request.is_ajax():
         data = all_data(request, CaseList)
         # print(data)
@@ -288,5 +289,6 @@ def run_case(requset):
     # 需要多线程运行。第一步要生成对应的测试用例json文件；第二步是调用unittest框架执行并生成测试报告
     if requset.method == "POST" and requset.is_ajax():
         req = json.loads(requset.body)
-        CaseThread(req["id"]).run()
+        print(req)
+        CaseThread(req["id"], req["env_url"]).run()
         return JsonResponse(run_msg)

@@ -37,7 +37,7 @@ case_but.addEventListener("click",(event)=> {
         caseEditSave(event);
     }
     if (event.target.classList.contains("run-case")) {
-        caseRun(event);
+        selectedEnv(event);
     }
 })
 
@@ -46,21 +46,29 @@ function caseEditSave(event) {
     window.location.href = editCaseUrl
 }
 //运行用例，运行之前需要选择执行的环境，把环境url传给后台
-function selectedEnv(){
 
-}
-function caseRun(event) {
+function selectedEnv(event){
     let deCase = event.target.parentNode.parentNode;
     let id = deCase.querySelector("[name='list-case-id']").innerText;
+    addWin.style.display = "block";
+    document.querySelector(".save-new-but").onclick = function(){
+        let env_url = document.querySelector(".e_selected").value
+        // console.log(typeof(env_url))
+        caseRun(id, env_url);
+    }
+}
+function caseRun(id, env_url) {
     fetch(runCaseUrl,{
         method:'POST',
         headers:{"X-CSRFToken":token,"X-Requested-With":"XMLHttpRequest"},
-        body:JSON.stringify({id: id})
+        body:JSON.stringify({id: id, env_url:env_url})
     })
        .then(response => response.json())
-        .then(data => {console.log("Success",data);
-        //
-        }).catch((error) => {console.error('Error:', error);
+        .then(data => {
+            console.log("Success",data);
+            addWin.style.display = "none";
+        }).catch((error) => {
+            console.error('Error:', error);
         });
 
 }

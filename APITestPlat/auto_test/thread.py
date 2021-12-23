@@ -12,15 +12,18 @@ cmdPath = BASE_DIR + "/auto_test/"
 
 class CaseThread:
 
-    def __init__(self, case_id):
+    def __init__(self, case_id, env_url):
         self.id = case_id
+        self.env_url = env_url
 
     def w_json(self):
         data = {}
         case = CaseList.objects.get(id=self.id)
         # print(case, type(case))
+        print(self.env_url, type(self.env_url))
         data[case.name] = {
-            "url": case.url,
+            "name": case.name,
+            "url": self.env_url + case.url,
             "header": case.re_header,
             "method": case.method,
             "param_type": case.param_type,
