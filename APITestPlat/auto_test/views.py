@@ -258,7 +258,7 @@ def case(request):
         if "id" in req:
             pass
         else:
-            CaseList.objects.create(include=req["include"], name=req["name"], url=req["url"], method=req["methods"],
+            CaseList.objects.create(include=req["include"], name=req["name"], url=req["url"], method=req["method"],
                                     re_header=req["re_header"], param_type=req["param_types"], params=req["params"],
                                     check_key=req["check_key"], check_value=req["check_value"],
                                     assert_type=req["assert_type"], creator=req["creator"],
@@ -280,7 +280,27 @@ def edit_case(request):
         po = all_data(request, Project)  # 这里用的是.value的方法，与all有区别
         # 连续调用两次，mo、po的值最后都是取了po？？？-暂时用字典赋值处理下
         d["pof"] = po["data"]
-        return render(request, "./templates/edit_case.html", {"mof": d["mof"], "pof": d["pof"]})
+        # 获取前置用例
+        ca = all_data(request, CaseList)
+        # print(ca["data"])
+        d["include"] = ca["data"]
+        return render(request, "./templates/edit_case.html", {"mof": d["mof"], "pof": d["pof"], "include": d["include"]})
+    if request.method == "POST":
+        req = json.loads(request.body)
+        case_info = CaseList.objects.values().filter(id=req["id"])
+        case_info = deal_data(case_info)["data"][0]
+        #这里的信息需要整理,restframework的框架是不是就不需要了。。
+        re_header = case_info["re_header"]
+        print(type(re_header))
+        # "{'header_key': '', 'header_value': ''}"转换成字典
+        case_info["re_header"] = case_info["re_header"].split(":")
+        print(case_info["re_header"])
+        # case_info["re_header"] = ""
+        case_info["pros"] = Project.objects.get(id=case_info["project_id"]).name
+        case_info["mokuais"] = MoKuai.objects.get(id=case_info["model_id"]).name
+        # case_info["suite"] =
+        print(case_info)
+        return JsonResponse(case_info)
 
 
 @login_check

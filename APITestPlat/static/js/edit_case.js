@@ -1,11 +1,52 @@
+let caseList = {name:"", url:"", params:"",creator:"",check_key:"",check_value:"",pros:"",mokuais:""};
+let caseListSelect = {include:"", method:"",param_types:"",assert_type:''};
+let caseHeader = {header_selected:"", re_header:{header_key:"",header_value:""}};
+// const fillData = async () => {
+//     //判断是编辑还是新增，编辑需要请求后台查询数据填充，新增不需要
+//     let params = new URLSearchParams(document.location.search);
+//     let case_id = params.get("id");
+//     if (case_id){
+//     const data =  await caseEditSave(case_id)
+//     console.log(data)
+//     }
+// }
+// 需要return 整个fetch
+// 下面这里等同于上面的处理promise的方式，需要return data
+let params = new URLSearchParams(document.location.search);
+let case_id = params.get("id");
+if (case_id){
+    EditSave({id:case_id}).then((data) => {
+        console.log(data);
+        //给编辑页面赋值
+        setValue(data,caseList)
+        setOptionValue(data,caseListSelect);
+        // setFor(caseHeader["re_header"],data);
+    })
+}
+function setValue(data,list) {
+    for (let it in list) {
+        console.log(it, data[it])
+        if (it !== "pros" && it !=="mokuais"){
+            document.querySelector('#'+it).value=data[it]
+        }else{
+            setOptionValues(data,it)
+        }
+    }
+}
+function setOptionValue(data, list){
+    for (let it in list) {
+        setOptionValues(data, it)
+        }
+}
+function setOptionValues(data, it){
+    // console.log(it, data[it])
+    let option = document.querySelector('#'+it)
+    option.options[option.selectedIndex].value = data[it]
+}
 //用例，点击保存按钮
 let saveBut = document.querySelector("#case-save");
 let cancelBut = document.querySelector("#case-cancled");
-// let edit_list= document.querySelector(".edit-case-list");
 saveBut.onclick = function () {
-    let caseList = {name:"", url:"", params:"",creator:"",check_key:"",check_value:"",pros:"",mokuais:""};
-    let caseListSelect = {include:"", methods:"",param_types:"",assert_type:''};
-    let caseHeader = {header_selected:"", re_header:{header_key:"",header_value:""}};
     caseHeader["header_selected"]= document.querySelector("#header_selected").checked
     for (let he in caseHeader["re_header"]){
         let heValue = queryValue("#" + he);
@@ -31,8 +72,11 @@ function queryValue(att) {
     return document.querySelector(att).value;
 }
 function queryOptionValue(att) {
+    console.log(att)
     let option = document.querySelector(att);
-    return option.options[option.selectedIndex].value;
+    console.log(option)
+    // ?.方法
+    return option.options[option.selectedIndex]?.value||'';
 }
 
 cancelBut.onclick = function () {

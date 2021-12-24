@@ -139,3 +139,20 @@ function caseSave(data) {
         }).catch((error) => {console.error('Error:', error);
         });
 }
+//编辑xx，获取当前的xx的数据
+function EditSave(data) {
+    //1.先获取现有的值；2、赋值编辑窗口；3.获取到现有修改后的值，保存（调用base中的caseSave）
+    return fetch(location.pathname,{
+        method:"POST",
+        headers:{"X-CSRFToken":token},
+        body:JSON.stringify(data)
+    })
+    .then(response => response.json())
+        .then(data => {
+            console.log("Success");
+            return data;
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+
+}

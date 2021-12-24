@@ -57,7 +57,7 @@ class CaseList(models.Model):
     name = models.CharField(max_length=188, unique=True)
     url = models.CharField(max_length=3000)
     method = models.CharField(max_length=20)
-    re_header = models.TextField(blank=True)  #
+    re_header = models.CharField(max_length=1000, blank=True)#
     param_type = models.CharField(max_length=15)
     params = models.TextField(blank=True)
     # check = models.TextField(null=True)

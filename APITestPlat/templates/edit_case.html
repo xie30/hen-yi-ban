@@ -8,7 +8,7 @@
                     <li class="edit-case-list">用 例 名&nbsp：<input id="name" required="required"></li>
                     <li class="edit-case-list">接 &nbsp口Url：<input id="url" required="required"></li>
                     <li class="edit-case-list">请求方法：
-                        <select class="selects" id="methods">
+                        <select class="selects" id="method">
                             <option>GET</option>
                             <option>POST</option>
                             <option>PUT</option>
@@ -62,7 +62,9 @@
                     </li>
                     <li>前置用例
                         <select class="selects" id="include">
-                            <option></option>
+                            {% for inc in include %}
+                            <option value={{ inc.id }}> {{ inc.name }}</option>
+                            {% endfor %}
                         </select>
                     </li>
                     <li>全局变量:

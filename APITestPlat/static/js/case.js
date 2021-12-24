@@ -28,23 +28,20 @@ document.querySelector(".add-button").onclick = function () {
 // var run_but = document.querySelector(".run-case")
 var case_but =document.querySelector(".set-contents")
 case_but.addEventListener("click",(event)=> {
+    var deEnv = event.target.parentNode.parentNode;
+    var id = deEnv.querySelector("[name='list-case-id']").innerText;
     if (event.target.classList.contains("delete")) {
-        let deEnv = event.target.parentNode.parentNode;
-        let id = deEnv.querySelector("[name='list-case-id']").innerText;
         Del(id, caseUrl);
     }
     if (event.target.classList.contains("edit")) {
-        caseEditSave(event);
+        window.location.href = editCaseUrl+'?id='+id;
+        caseEditSave(id);
     }
     if (event.target.classList.contains("run-case")) {
         selectedEnv(event);
     }
 })
 
-function caseEditSave(event) {
-    //1.先获取现有的值；2、赋值编辑窗口；3.获取到现有修改后的值，保存（调用base中的caseSave）
-    window.location.href = editCaseUrl
-}
 //运行用例，运行之前需要选择执行的环境，把环境url传给后台
 
 function selectedEnv(event){
