@@ -60,7 +60,7 @@ function createList(data) {
     }
     document.querySelector('tbody').innerHTML = innerHTML;
 }
-//新增点击保存按钮
+//新增点击保存按钮，ajax
 function Save(url, pas) {
     //console.log(url, pas)
     fetch(url,{
@@ -122,7 +122,7 @@ var cases = document.querySelector(".case-list span");
 document.querySelector(".case-list").onclick = function () {
     window.location.href = caseUrl;
 };
-//用例保存函数
+//用例保存函数,单独的页面编辑，非ajax
 function caseSave(data) {
     fetch(caseUrl,{
         method:'POST',
@@ -132,7 +132,7 @@ function caseSave(data) {
         .then(response => response.json())
         .then(data => {console.log("Success",data);
         // 请求成功需要返回查询列表？？
-        if (data['code'] == '20010'){
+        if (data['code'] == '20010' || data['code'] == '20020'){
             window.location.href = caseUrl;
         }
 
@@ -140,7 +140,7 @@ function caseSave(data) {
         });
 }
 //编辑xx，获取当前的xx的数据
-function EditSave(data) {
+function EditGetData(data) {
     //1.先获取现有的值；2、赋值编辑窗口；3.获取到现有修改后的值，保存（调用base中的caseSave）
     return fetch(location.pathname,{
         method:"POST",

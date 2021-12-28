@@ -64,7 +64,7 @@ def login(request):
         else:
             return render(request, "templates/login.html", {"wrong_msg": msg, "info": user_form})
     else:
-        print('打开登录页面')
+        # print('打开登录页面')
         return render(request, './templates/login.html')
 
 

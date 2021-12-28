@@ -2,6 +2,7 @@
 
 import datetime
 import json
+import ast
 
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -241,7 +242,6 @@ def case(request):
     :param request:
     :return: 查询case表，并返回所有的数据
     """
-
     if request.method == "GET" and not request.is_ajax():
         env_list = RunEnv.objects.all()
         return render(request, "./templates/case_list.html", {"env_url": env_list})
@@ -256,10 +256,16 @@ def case(request):
     elif request.method == "POST" and not request.is_ajax():
         req = json.loads(request.body)
         if "id" in req:
-            pass
+            ca = CaseList.objects.filter(id=req["id"])
+            ca.update(include=req["include"], name=req["name"], url=req["url"], method=req["method"],
+                      re_header=req["re_header"], param_type=req["param_type"], params=req["params"],
+                      check_key=req["check_key"], check_value=req["check_value"],assert_type=req["assert_type"],
+                      creator=req["creator"], project_id=req["pros"], model_id=req['mokuais'],
+                      update_time=datetime.datetime.now())
+            return JsonResponse(update_msg)
         else:
             CaseList.objects.create(include=req["include"], name=req["name"], url=req["url"], method=req["method"],
-                                    re_header=req["re_header"], param_type=req["param_types"], params=req["params"],
+                                    re_header=req["re_header"], param_type=req["param_type"], params=req["params"],
                                     check_key=req["check_key"], check_value=req["check_value"],
                                     assert_type=req["assert_type"], creator=req["creator"],
                                     project_id=req["pros"], model_id=req['mokuais'])
@@ -288,16 +294,15 @@ def edit_case(request):
     if request.method == "POST":
         req = json.loads(request.body)
         case_info = CaseList.objects.values().filter(id=req["id"])
+        print(case_info)
         case_info = deal_data(case_info)["data"][0]
-        #这里的信息需要整理,restframework的框架是不是就不需要了。。
-        re_header = case_info["re_header"]
-        print(type(re_header))
-        # "{'header_key': '', 'header_value': ''}"转换成字典
-        case_info["re_header"] = case_info["re_header"].split(":")
-        print(case_info["re_header"])
-        # case_info["re_header"] = ""
+        # https://www.cnblogs.com/xiao-xue-di/p/11414210.html --字符串转为字典
+        re_header = ast.literal_eval(case_info["re_header"])
+        # print(re_header, type(re_header))
         case_info["pros"] = Project.objects.get(id=case_info["project_id"]).name
         case_info["mokuais"] = MoKuai.objects.get(id=case_info["model_id"]).name
+        case_info["include"] = CaseList.objects.get(id=case_info["include"]).name
+        case_info["re_header"] = re_header
         # case_info["suite"] =
         print(case_info)
         return JsonResponse(case_info)

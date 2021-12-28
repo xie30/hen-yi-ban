@@ -1,1 +1,1 @@
-{"\u767b\u5f55": {"name": "\u767b\u5f55", "url": "https://ovh.ginolegaltech.com/user/login/", "header": "{'header_key': '', 'header_value': ''}", "method": "GET", "param_type": "params", "body": "0", "assert_type": "in", "check_key": "", "check_value": ""}}
+{"\u767b\u5f55get": {"name": "\u767b\u5f55get", "url": "https://ovh.ginolegaltech.com//user/login/", "header": "{'header_key': 'ew', 'header_value': 'qw'}", "method": "POST", "param_type": "json", "body": "0", "assert_type": "in", "check_key": "qw", "check_value": "qwe"}}
