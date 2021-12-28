@@ -1,1 +1,1 @@
-{"\u767b\u5f55get": {"name": "\u767b\u5f55get", "url": "https://ovh.ginolegaltech.com//user/login/", "header": "{'header_key': 'ew', 'header_value': 'qw'}", "method": "POST", "param_type": "json", "body": "0", "assert_type": "in", "check_key": "qw", "check_value": "qwe"}}
+{"\u767b\u5f55post": {"name": "\u767b\u5f55post", "url": "www.baidu.com/user/login/", "header": "{'header_key': 'token', 'header_value': '2_token'}", "method": "PUT", "param_type": "json", "body": "0", "assert_type": "==", "check_key": "code", "check_value": "200"}}

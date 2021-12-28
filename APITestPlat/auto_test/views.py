@@ -314,6 +314,6 @@ def run_case(requset):
     # 需要多线程运行。第一步要生成对应的测试用例json文件；第二步是调用unittest框架执行并生成测试报告
     if requset.method == "POST" and requset.is_ajax():
         req = json.loads(requset.body)
-        print(req)
+        # print(req)
         CaseThread(req["id"], req["env_url"]).run()
         return JsonResponse(run_msg)
