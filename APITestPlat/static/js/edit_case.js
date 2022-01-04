@@ -27,6 +27,7 @@ if (case_id){
         //点击保存，获取页面的新的只update
         saveBut.onclick = function (){
             let editCaseList = getData();
+            // console.log(editCaseList);
             let newCaseLists = {...editCaseList, ...{id:case_id}};
             let editCaseData = JSON.stringify(newCaseLists);
             caseSave(editCaseData);
@@ -57,19 +58,17 @@ function setOptionValue(data, list){
 function setOptionValues(data, it){
     // console.log(it, data[it])
     let option = document.querySelector('#'+it)
-    // ??????
     // console.log(option.options)
     for (let i=0; i<(option.options).length;i++){
-        console.log((option.options)[i])
+        // console.log((option.options)[i])
         let text = (option.options)[i]
+        // console.log(`"${text.innerText}"`, data[it],typeof (text.innerText),typeof (data[it]))
+        // console.log(text.innerText == data[it])
         if(text.innerText == data[it]){
             (option.options)[i].selected = true;
         }
     }
 }
-
-
-
 function getData() {
     caseHeader["header_selected"] = document.querySelector("#header_selected").checked
     for (let he in caseHeader["re_header"]) {
@@ -82,6 +81,7 @@ function getData() {
     }
     for (let se in caseListSelect) {
         let selectValue = queryOptionValue("#" + se);
+        console.log(caseListSelect[se], selectValue)
         caseListSelect[se] = selectValue;
     }
     let newCaseList = {...caseList, ...caseListSelect, ...caseHeader};
@@ -99,7 +99,7 @@ function queryOptionValue(att) {
     let option = document.querySelector(att);
     console.log(option)
     // ?.方法
-    return option.options[option.selectedIndex]?.value||'';
+    return option.options[option.selectedIndex]?.value||'None';
 }
 
 cancelBut.onclick = function () {

@@ -301,7 +301,10 @@ def edit_case(request):
         # print(re_header, type(re_header))
         case_info["pros"] = Project.objects.get(id=case_info["project_id"]).name
         case_info["mokuais"] = MoKuai.objects.get(id=case_info["model_id"]).name
-        case_info["include"] = CaseList.objects.get(id=case_info["include"]).name
+        if case_info["include"] != 'None':
+            case_info["include"] = CaseList.objects.get(id=case_info["include"]).name
+        else:
+            case_info["include"] = 'None'
         case_info["re_header"] = re_header
         # case_info["suite"] =
         print(case_info)

@@ -62,9 +62,11 @@
                     </li>
                     <li>前置用例
                         <select class="selects" id="include">
+                            <option> None </option>
                             {% for inc in include %}
-                            <option value={{ inc.id }}> {{ inc.name }}</option>
+                                <option value={{ inc.id }}>{{ inc.name }}</option>
                             {% endfor %}
+
                         </select>
                     </li>
                     <li>全局变量:
