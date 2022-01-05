@@ -60,11 +60,12 @@ class CaseList(models.Model):
     re_header = models.CharField(max_length=1000, blank=True)#
     param_type = models.CharField(max_length=15)
     params = models.TextField(blank=True)
-    # check = models.TextField(null=True)
     check_key = models.CharField(max_length=200, null=True)
     check_value = models.CharField(max_length=200,null=True)
     assert_type = models.CharField(max_length=10,null=True)
     status = models.BooleanField(default=1,verbose_name="状态")
+    variable = models.CharField(max_length=100, blank=True)
+    var_rules = models.CharField(max_length=100, blank=True)
     creator = models.CharField(max_length=50)
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)

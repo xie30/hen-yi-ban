@@ -1,4 +1,4 @@
-let caseList = {name:"", url:"", params:"",creator:"",check_key:"",check_value:"",pros:"",mokuais:""};
+let caseList = {name:"", url:"", params:"",creator:"",check_key:"",check_value:"",pros:"",mokuais:"", variable:"", var_rules:""};
 let caseListSelect = {include:"", method:"",param_type:"",assert_type:''};
 let caseHeader = {header_selected:"", re_header:{header_key:"",header_value:""}};
 // const fillData = async () => {

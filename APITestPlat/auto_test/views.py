@@ -259,16 +259,16 @@ def case(request):
             ca = CaseList.objects.filter(id=req["id"])
             ca.update(include=req["include"], name=req["name"], url=req["url"], method=req["method"],
                       re_header=req["re_header"], param_type=req["param_type"], params=req["params"],
-                      check_key=req["check_key"], check_value=req["check_value"],assert_type=req["assert_type"],
-                      creator=req["creator"], project_id=req["pros"], model_id=req['mokuais'],
-                      update_time=datetime.datetime.now())
+                      check_key=req["check_key"], check_value=req["check_value"], assert_type=req["assert_type"],
+                      creator=req["creator"], project_id=req["pros"], model_id=req['mokuais'], variable=req["variable"],
+                      var_rules=req["var_rules"], update_time=datetime.datetime.now())
             return JsonResponse(update_msg)
         else:
             CaseList.objects.create(include=req["include"], name=req["name"], url=req["url"], method=req["method"],
                                     re_header=req["re_header"], param_type=req["param_type"], params=req["params"],
                                     check_key=req["check_key"], check_value=req["check_value"],
-                                    assert_type=req["assert_type"], creator=req["creator"],
-                                    project_id=req["pros"], model_id=req['mokuais'])
+                                    assert_type=req["assert_type"], creator=req["creator"], variable=req["variable"],
+                                    var_rules=req["var_rules"], project_id=req["pros"], model_id=req['mokuais'])
             return JsonResponse(data=new_msg, status=200)
     elif request.method == "DELETE" and request.is_ajax():
         delete(request, CaseList)

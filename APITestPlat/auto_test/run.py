@@ -17,7 +17,8 @@ class ApiTest(unittest.TestCase):
     # urls = "5"
     @unpack
     @file_data(jsonFilePath)
-    def test_case(self, name, url, header, method, param_type, body, assert_type, check_key, check_value):
+    def test_case(self, name, url, header, method, param_type, body, assert_type, check_key, check_value, variable,
+                  var_rules):
         # print 的内容会输出到最终的html报告stdo一栏中
         # print("\n---用例请求参数---\n", "URL:" + url, "\n请求方法:"+method, "\n请求头："+header, "\n请求参数类型："+param_type,
         #       "\n请求体："+body, "\n断言方式："+assert_type, "\n断言key："+check_key, "\n断言value："+check_value)
