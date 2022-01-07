@@ -38,7 +38,6 @@ def login(request):
     :return:
     """
     if request.method == 'POST':
-        # 获取提交的数据https://docs.djangoproject.com/zh-hans/3.2/ref/request-response/
         user_form = request.POST
         # print('提交:\n' + str(user_form.dict()))
         # model对象

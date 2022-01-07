@@ -10,7 +10,7 @@ from django.shortcuts import render
 from auto_test import models
 from auto_test.models import RunEnv, Project, MoKuai, CaseList
 from myadmin.views import login_check
-from auto_test.thread import CaseThread
+from auto_test.athread import CaseThread
 
 new_msg = {"msg": "saved successfully", "code": "20010"}
 update_msg = {"msg": "update completed", "code": "20020"}
@@ -67,7 +67,6 @@ def check_data(s, *args, **kwargs):
     用于校验字符串是否为空，列表是否为空，字典的value值是否为空!
     如果前端没有校验必填，name字段可以="",而且project_id可以为none，导致会出现一些查询错误
         --创建数据或者更新数据，后台需要校验错误的数据
-        --https://www.cnblogs.com/hello-wei/p/12504548.html
     :param s:
     :param args:
     :param kwargs:
@@ -187,7 +186,6 @@ def mokuai(request):
         # """
         # 如果前端没有校验必填，name字段可以="",而且project_id可以为none，导致会出现一些查询错误？？？？
         # --创建数据或者更新数据，后台需要校验错误的数据
-        # --https://www.cnblogs.com/hello-wei/p/12504548.html
         # """
         # # models ---> project多对一, 项目一旦被删除，id就是none了，查询不到数据，需要处理？--
         # # print(res["data"][0]["project_id"])
@@ -223,7 +221,6 @@ def write_mk(request):
             return JsonResponse(update_msg)
         else:
             # models ---> project多对一  \\\先实例化外键查询
-            # ORM查询操作详解：https://www.cnblogs.com/hanbowen/p/9566787.html
             try:
                 models.MoKuai.objects.create(name=req["m_name"], m_description=req["m_description"],
                                              m_creator=req["m_creator"], m_tester=req["m_tester"],
@@ -296,7 +293,6 @@ def edit_case(request):
         case_info = CaseList.objects.values().filter(id=req["id"])
         print(case_info)
         case_info = deal_data(case_info)["data"][0]
-        # https://www.cnblogs.com/xiao-xue-di/p/11414210.html --字符串转为字典
         re_header = ast.literal_eval(case_info["re_header"])
         # print(re_header, type(re_header))
         case_info["pros"] = Project.objects.get(id=case_info["project_id"]).name
