@@ -6,9 +6,15 @@ import requests
 import time
 from ddt import ddt, unpack, file_data, data
 import re
+import ast
+
 BASE_DIR = str(settings.BASE_DIR).replace("\\", "/")
 jsonFilePath = BASE_DIR + "/auto_test/caseJson/case_data_list.json"
 reportFilePath = BASE_DIR + "/auto_test/report/"
+
+
+def replace_var():
+    pass
 
 
 class RelyData(object):
@@ -21,29 +27,47 @@ class ApiTest(unittest.TestCase):
     # urls = "5"
     @unpack
     @file_data(jsonFilePath)
-    def test_case(self, name, url, header, method, param_type, body, assert_type, check_key, check_value, variable,
-                  var_rules):
+    def test_case(self, **kwargs):
         # print 的内容会输出到最终的html报告stdo一栏中
-        if method == "GET":
-            r = requests.get(url)
-            # 响应没有输出在报告中？--可以显示，报告往下拉，空行太多了
-            setattr(RelyData, variable, re.findall(var_rules, r.text)[0])
-            print(getattr(RelyData, "token"))
-            print("\n---用例请求参数---\n", "\n用例名:" + name, "URL:" + url, "\nMethod:"+method, "\nHeader:" + header,
-                  "\nparam_type:" + param_type, "\nBody:" + body, "\n---用例响应数据---\n", "\n响应头:" + str(r.headers),
-                  "\n响应码：", r.status_code, "\n响应内容：", r.text)
-        elif method == "POST":
-            r = requests.post(url, body)
-            print(type(body))
-            print("\n---用例请求参数---\n", "\n用例名:" + name, "URL:" + url, "\nMethod:" + method, "\nHeader:" + header,
-                  "\nparam_type:" + param_type, "\nBody:" + body, "\n---用例响应数据---\n", "\n响应头:" + str(r.headers),
-                  "\n响应码：", r.status_code, "\n响应内容：", r.text)
-        elif method == "DELETE":
+        if kwargs.get('method') == "GET":
+            r = requests.get(kwargs.get('url'))
+            if kwargs.get('variable'):
+                setattr(RelyData, kwargs.get('variable'), re.findall(kwargs.get('var_rules'), r.text)[0])
+                print(getattr(RelyData, kwargs.get('variable')))
+            self.stdo(r, kwargs)
+        elif kwargs.get('method') == "POST":
+            # kwargs['header']取到的值是字符串
+            kwargs['header'] = ast.literal_eval(kwargs['header'])
+            kwargs['header'] = self.getRelyData(kwargs['header'])
+            header = {kwargs['header']["header_key"]: kwargs['header']["header_value"]}
+            print(header)
+            body = ast.literal_eval(kwargs.get('body'))
+            body = self.getRelyData(body)
+            kwargs['body'] = body
+            # 判断个请求参数类型：
+            r = requests.post(kwargs.get('url'), data=body, headers=header)
+            self.stdo(r, kwargs)
+        elif kwargs.get('method') == "DELETE":
             pass
-        elif method == "PUT":
+        elif kwargs.get('method') == "PUT":
             pass
         else:
             print("请求方法错误")
+
+    def stdo(self, r, kwargs):
+        print("\n---用例请求参数---\n", "\n用例名:" + kwargs.get('name'), "\nURL:" + kwargs.get('url'), "\nMethod:",
+              kwargs.get('method'), "\nHeader:", kwargs.get('header'), "\nparam_type:", kwargs.get('param_type'),
+              "\nBody:", kwargs.get('body'), "\n---用例响应数据---\n", "\n响应头:" + str(r.headers),
+              "\n响应码：", r.status_code, "\n响应内容：", r.text)
+
+    def getRelyData(self, dict_data):
+        for k, v in dict_data.items():
+            if "$" in v:
+                key = v.strip("$")
+                value = getattr(RelyData, key)
+                dict_data[k] = value
+        return dict_data
+
 
     # def create_suite(self, dirs):
     #     #     print(dirs)
@@ -78,4 +102,3 @@ if __name__ == "__main__":
         )
         runner.run(suite)
     # 执行完在重命名report？？--设置全局变量不行？或者在取一次json文件
-

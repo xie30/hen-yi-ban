@@ -12,6 +12,14 @@ jsonFilePath = BASE_DIR + "/auto_test/caseJson/case_data_list.json"
 cmdPath = BASE_DIR + "/auto_test/"
 
 
+def w_jsons(data):
+    # print(case_data)
+    case_data = json.dumps(data)
+    # 永远都是一条数据？？
+    with open(jsonFilePath, "w") as f:
+        f.write(case_data)
+
+
 class CaseThread(RelyData):
 
     def __init__(self, case_id, env_url):
@@ -32,24 +40,26 @@ class CaseThread(RelyData):
             "variable": case.variable,
             "var_rules": case.var_rules
         }}
-        # print(case_data)
-        case_data = json.dumps(data)
-        # 永远都是一条数据？？
-        with open(jsonFilePath, "w") as f:
-            f.write(case_data)
+        return data
 
     def w_json(self):
-        # 先判断是否有前置用例依赖，有的话先执行前置用例，获取全局的变量:同时执行多个用例，添加到同一个json文件中取
         case = CaseList.objects.get(id=self.id)
-        print(case.include)
+        # print(case.include)
         if case.include != 'None':
             case1 = CaseList.objects.get(id=case.include)
-            self.j(case1)
-            # self.run_cmd()
+            case1_data = self.j(case1)
+            case0_data = self.j(case)
+            case = case1_data.copy()
+            case.update(case0_data)
+            # print(type(case), case)
+            # 单个用例且有前置用例
+            w_jsons(case)
+            self.run_cmd()
             print("2222225555", getattr(RelyData, "token"))
-        print("111", getattr(RelyData, "token"))
-        # header 就要重新创建了---
-        self.j(case)
+            return
+        # print("111", getattr(RelyData, "token"))
+        # 单个用例且无前置用例执行
+        w_jsons(self.j(case))
         self.run_cmd()
 
     @staticmethod

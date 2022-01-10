@@ -1,0 +1,565 @@
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'/>
+    <meta name='description' content=''/>
+    <meta name='robots' content='noodp, noydir'/>
+    <meta name='viewport' content='width=device-width, initial-scale=1'/>
+    <meta id="timeStampFormat" name="timeStampFormat" content='MMM d, yyyy hh:mm:ss a'/>
+
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link href='http://extentreports.com/resx/dist/css/extent.css' type='text/css' rel='stylesheet'/>
+
+    <title>接口 - TestReport</title>
+    
+    <style type="text/css">
+        .node.level-1 ul {
+            display: none;
+        }
+
+        .node.level-1.active ul {
+            display: block;
+        }
+
+        .card-panel.environment th:first-child {
+            width: 30%;
+        }
+        .small_img{
+            height: 180px; 
+            width: 100px; 
+            padding: 10px;
+            float: left;
+            background-repeat: no-repeat; 
+            background-position: center center; 
+            background-size: cover; 
+          } 
+        .black_overlay{ 
+            display: none; 
+            position: absolute; 
+            top: 0%; 
+            left: 0%; 
+            width: 100%; 
+            height: 100%; 
+            background-color: white; 
+            z-index:1001; 
+            -moz-opacity: 0.8; 
+            opacity:.80; 
+            filter: alpha(opacity=80);  
+        } 
+        .big_img { 
+            cursor: pointer;
+            display: none; 
+            position: absolute; 
+            height: 650px;
+            left:50%; 
+            top: 50%;
+            margin: -300px 0px 0px -200px;
+            z-index:1002; 
+            overflow: auto; 
+        }
+    </style>
+
+    
+</head>
+
+<body class='extent standard default hide-overflow dark'>
+<div id='theme-selector' alt='切换主题，默认黑色' title='切换主题'>
+    <span><i class='material-icons'>desktop_windows</i></span>
+</div>
+
+    <nav>
+    <div class="nav-wrapper">
+        <a href="#!" class="brand-logo blue darken-3">Extent</a>
+
+        <!-- slideout menu -->
+        <ul id='slide-out' class='side-nav fixed hide-on-med-and-down'>
+            <li class='waves-effect active'><a href='#!' view='test-view'
+                                               onclick="configureView(0);chartsView('test');"><i class='material-icons'>dashboard</i></a>
+            </li>
+            <!-- <li class='waves-effect'><a href='#!' view='category-view' onclick="configureView(1)"><i
+                    class='material-icons'>label_outline</i></a></li>
+            <li class='waves-effect'><a href='#!' onclick="configureView(-1);chartsView('dashboard');"
+                                        view='dashboard-view'><i class='material-icons'>track_changes</i></a></li> -->
+        </ul>
+
+        <!-- report name -->
+        <span class='report-name'>Test Report: 接口</span>
+
+        <!-- report headline -->
+        <span class='report-headline'></span>
+
+        <!-- nav-right -->
+        <ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
+            <li>
+                <a href='#!'>
+                    <span class='label suite-start-time blue darken-3'>Start_time: 2022-01-10 19:02:29</span>
+                </a>
+            </li>
+            <li>
+                <a href='#!'>
+                    <span class='label blue darken-3'>Duration: 0:00:01.725507 </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+    
+
+<div class='container'>
+    
+    <div id='test-view' class='view'>
+
+        
+    <section id='controls'>
+            <div class='controls grey lighten-4'>
+                <!-- test toggle -->
+                <div class='chip transparent'>
+                    <a class='dropdown-button tests-toggle' data-activates='tests-toggle' data-constrainwidth='true'
+                       data-beloworigin='true' data-hover='true' href='#'>
+                        <i class='material-icons'>warning</i> Status
+                    </a>
+                    <ul id='tests-toggle' class='dropdown-content'>
+                        <li status='pass'><a href='#!'>Pass <i class='material-icons green-text'>check_circle</i></a>
+                        </li>
+                        <li status='fail'><a href='#!'>Fail <i class='material-icons red-text'>cancel</i></a></li>
+                        <li status="skip"><a href="#!">Skip <i class="material-icons cyan-text">redo</i></a></li>
+                        <li class='divider'></li>
+                        <li status='clear' clear='true'><a href='#!'>Clear Filters <i
+                                class='material-icons'>clear</i></a></li>
+                    </ul>
+                </div>
+                <!-- test toggle -->
+
+                <!-- category toggle -->
+                <div class='chip transparent'>
+                    <a class='dropdown-button category-toggle' data-activates='category-toggle'
+                       data-constrainwidth='false' data-beloworigin='true' data-hover='true' href='#'>
+                        <i class='material-icons'>local_offer</i> Category
+                    </a>
+                    <ul id='category-toggle' class='dropdown-content'>
+                        
+    <li><a href='#'>ApiTest</a></li>
+    
+                        <li class='divider'></li>
+                        <li class='clear'><a href='#!' clear='true'>Clear Filters</a></li>
+                    </ul>
+                </div>
+                <!-- category toggle -->
+
+                <!-- clear filters -->
+                <div class='chip transparent hide'>
+                    <a class='' id='clear-filters' alt='Clear Filters' title='Clear Filters'>
+                        <i class='material-icons'>close</i> Clear
+                    </a>
+                </div>
+                <!-- clear filters -->
+
+                <!-- enable dashboard -->
+                <div id='toggle-test-view-charts' class='chip transparent'>
+                    <a class='pink-text' id='enable-dashboard' alt='Enable Dashboard' title='Enable Dashboard'>
+                        <i class='material-icons'>track_changes</i> Dashboard
+                    </a>
+                </div>
+                <!-- enable dashboard -->
+
+                <!-- search -->
+                <div class='chip transparent' alt='Search Tests' title='Search Tests'>
+                    <a href="#" class='search-div'>
+                        <i class='material-icons'>search</i> Search
+                    </a>
+
+                    <div class='input-field left hide'>
+                        <input style="color: red" id='search-tests' type='text' class='validate browser-default'
+                               placeholder='Search Tests...'>
+                    </div>
+
+                </div>
+                <!-- search -->
+            </div>
+        </section>
+    
+
+        
+    <div id='test-view-charts' class='subview-full'>
+
+            <div id='test-view-charts' class='subview-full'>
+                <div id='charts-row' class='row nm-v nm-h'>
+                    <div class='col s12 m6 l6 np-h'>
+                        <div class='card-panel nm-v'>
+                            <div class='left panel-name'>Tests</div>
+                            <div class='chart-box'>
+                                <canvas id='parent-analysis' width='100' height='80'></canvas>
+                            </div>
+                            <div class='block text-small'>
+                            <span class='tooltipped' data-position='top'><span
+                                    class='strong'>2</span> test(s) passed</span>
+                                <span class='tooltipped' data-position='top'><span
+                                        class='strong'>0</span> test(s) failed</span>
+                            </div>
+                            <div class='block text-small'>
+                            <span class='strong tooltipped' data-position='top'
+                            >0</span>
+                                test(s) errored
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='col s12 m6 l6 np-h'>
+                        <div class='card-panel nm-v'>
+                            <div class='left panel-name'>Suites</div>
+                            <div class='chart-box'>
+                                <canvas id='child-analysis' width='100' height='80'></canvas>
+                            </div>
+                            <div class='block text-small'>
+                            <span id="pass_suites" class='tooltipped' data-position='top'>
+                            </span>
+                            </div>
+                            <div class='block text-small'>
+                                <span id="fail_suites" class='strong tooltipped' data-position='top'></span> suite(s)
+                                failed
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        
+    <div class='subview-left left'>
+
+            <div class='view-summary'>
+                <h5>Suites</h5>
+                <ul id='test-collection' class='test-collection'>
+                
+    <li class="test displayed active has-leaf pass" status="pass" bdd="true" test-id="ApiTest_1">
+    <div class='test-heading'>
+        <span class='test-name'>ApiTest</span>
+        <span class='test-time'>desc:  </span>
+        <span class="test-status right pass">pass</span>
+    </div>
+    <div class='test-content hide'>
+        <div class='test-desc'>Pass: 2 ;
+                                Fail: 0 ;
+                                Error: 0 ;
+        </div>
+        <div class='test-attributes'>
+            <div class='category-list'>
+                <span class='category label white-text'>ApiTest</span>
+            </div>
+        </div>
+        <ul class='collapsible node-list' data-collapsible='accordion'>
+            
+            <li class="node level-1 leaf pass" status="pass" test-id="test_case_1_登录get_1: test_case_1_登录get_1_pt1.1_1">
+            <div class='collapsible-header'>
+                <div class='node-name'>test_case_1_登录get_1</div>
+                <span class='node-time'>desc: test_case_1_登录get_1</span>
+                <span class="test-status right pass">pass</span>
+            </div>
+            <div class='collapsible-body'>
+                <div class='category-list right'>
+                    <span class='category label white-text'>test_case_1_登录get_1</span>
+                </div>
+                <div class='node-steps'>
+                    <table class='bordered table-results'>
+                        <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Identity</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        
+        <tr class='info' status='info'>
+            <td class='status info' title='info' alt='info'><i
+                    class='material-icons'>low_priority</i></td>
+            <td class='timestamp'>stdo</td>
+            <td style="white-space:pre-wrap;word-break:break-all">
+0: GNDz3nrPyTgP2BWKkXenZwL4wBRrdXtHSnNjUWGCtvjRaoqwooGQ87UaayNY5dSg<br /><br />---用例请求参数---<br /> <br />用例名:登录get-1 <br />URL:https://ovh.ginolegaltech.com/user/login/ <br />Method: GET <br />Header: {'header_key': '', 'header_value': ''} <br />param_type: params <br />Body:  <br />---用例响应数据---<br /> <br />响应头:{'Date': 'Mon, 10 Jan 2022 11:02:30 GMT', 'Content-Type': 'text/html; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Vary': 'Accept-Encoding, Cookie, Accept-Language, Origin', 'Expires': 'Mon, 10 Jan 2022 11:02:30 GMT', 'Cache-Control': 'max-age=0, no-cache, no-store, must-revalidate, private', 'Content-Security-Policy': "connect-src 'self'; script-src https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ appsforoffice.microsoft.com cdnjs.cloudflare.com netdna.bootstrapcdn.com cdn.polyfill.io 'self'; img-src ginopublic.blob.core.windows.net blob: 'self'; worker-src blob:; default-src 'none'; font-src fonts.gstatic.com static2.sharepointonline.com spoprod-a.akamaihd.net cdnjs.cloudflare.com 'self'; style-src fonts.googleapis.com spoprod-a.akamaihd.net cdnjs.cloudflare.com 'self'; frame-src https://www.google.com/recaptcha/ 'self'", 'X-Frame-Options': 'SAMEORIGIN', 'Content-Language': 'fr', 'Set-Cookie': 'csrftoken=N8Se6bZjrXVb49zpaew38nIuSxCgmPyfZI2YXKe6mzYdcW3beFYwhYRAwuyNe5XO; expires=Mon, 09 Jan 2023 11:02:30 GMT; Max-Age=31449600; Path=/; SameSite=Lax; Secure, sessionid=59ml662aug840axnmjb2pr4u354pg3eq; expires=Mon, 17 Jan 2022 11:02:30 GMT; HttpOnly; Max-Age=604800; Path=/; Secure', 'Access-Control-Allow-Headers': 'Authorization, Content-Type, Accept, Origin, User-Agent, DNT, Cache-Control, X-Mx-ReqToken, X-Requested-With, GinoAddinToken, X_AUTH_TOKEN, ginoaddintoken', 'Pragma': 'no-cache', 'X-XSS-Protection': '1; mode=block', 'X-Content-Type-Options': 'nosniff', 'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload', 'Content-Encoding': 'gzip'} <br />响应码： 200 <br />响应内容： <br /><br /><br /><br /><!DOCTYPE HTML><br /><htmL><br /><head><br />    <title>Gino LegalTech Login</title><br />    <link rel="SHORTCUT ICON" sizes="16x16" type="image/x-icon" href="/static/images/favicon.ico"/><br />    <link rel="SHORTCUT ICON" sizes="32x32" type="image/x-icon" href="/static/images/favicon_32.ico"/><br />    <link rel="SHORTCUT ICON" sizes="64x64" type="image/x-icon" href="/static/images/favicon_64.ico"/><br />    <link rel="ICON" sizes="any" type="image/svg+xml" href="/static/images/favicon_logo.svg"/><br />    <meta name="viewport" content="width=device-width, initial-scale=1"><br />    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><br />    <meta http-equiv="X-UA-Compatible" content="ie=edge" /><br />    <link rel="stylesheet" type="text/css" href="/static/css/base.css?v=master-b2027d8:master-56c6dc8"/><br />    <link rel="stylesheet" type="text/css" href="/static/css/login.css?v=master-b2027d8:master-56c6dc8"/><br />    <script type="text/javascript" async src="/static/desk/js/webfontloader.js?custom=Ubuntu,PT+Sans,Open+Sans&v=master-b2027d8:master-56c6dc8"></script><br />    <br />    <script type="text/javascript" async src="https://www.google.com/recaptcha/api.js?render=explicit&onload=onReCaptcha"></script><br />    <br />    <!--<link rel="stylesheet" type="text/css" href="/static/style/dist/author/author.css"/>--><br />    <!--<link rel="stylesheet" type="text/css" href="/static/style/dist/main.css"/>--><br />    <!--<link rel="stylesheet" type="text/css" href="/static/style/dist/all_styles_generated.css"/>--><br /></head><br /><body><br />  <div class="login-container"><br />    <div class="base-login"><br />      <i class="left-background-image"><br />        <img src="/static/images/login-bg1.svg" /><br />      </i><br />      <i class="right-background-image"><br />        <img src="/static/images/login-bg2.svg" /><br />      </i><br />       <br />      <br />  <br /><br /><br /><br /><br />  <br />  <div class="login-banner-container"><br />    <img src="/static/images/welcome-2022.svg" alt=""><br />    <ul class="btn-group"></ul><br />    <div class='arrow'><br />      <a href="javascript:void(0)" class='prev'></a><br />      <a href="javascript:void(0)" class='next'></a><br />    </div><br />  </div><br />  <br /><br /><br /><br />      <br />      <div class="login-box"><br />      <br />        <br />        <div class="logo-gino"><br />          <div class="logo-wrapper"><br />            <img src="https://ginopublic.blob.core.windows.net/non-prod-logo/logo-gino-default.svg" /><br />            <br />          </div><br />        </div><br />        <br />        <br /><br /><div class="login-content"><br />  <br />    <br />      <br />      <!--<div class="login-or">ou</div>--><br />      <br /><br />      <br />          <div class="third-part-box"><br />      <br /><br />      <br />          <ul class="ul-form"><br />            <li class="form"><br />              <!-- <form method="POST" action="/user/login/"> --><br />              <form method="POST" action="/user/login/" data-sitekey="6LfzRJYaAAAAAJf_lzzssBANUovj7GuD0LNuY1C2"><br />                <input type="hidden" name="csrfmiddlewaretoken" value="GNDz3nrPyTgP2BWKkXenZwL4wBRrdXtHSnNjUWGCtvjRaoqwooGQ87UaayNY5dSg"><br />                <div class="form-block"><br />                  <div class="login-label"><br />                    <label><br />                      <b>adresse email</b><br />                      <span></span><br />                      <input type="username" name="username" id="username"<br />                             value=""<br />                             class="form-control username" required><br />                    </label><br />                    <label><br />                      <b>mot de passe</b><br />                      <span class="passwordIcon"></span><br />                      <input type="password" name="password" id="password" required<br />                             class="form-control password"><br />                      <i class="hidePassword"></i><br />                    </label><br />                  </div><br />                  <br />                  <input type="hidden" name="next" value=""/><br />                  <div class="button"><br />                    <button type="button" disabled="disabled" class="btn btn-primary custom-btn-primary loginbutton login-common-button"><br />                      <span class="gbt-btn-text">se connecter</span><br />                    </button><br />                  </div><br />                </div><br />                <a class="common-a forgotPassword" href="/password/forgot/">mot de passe oublié ?</a><br />              </form><br />            </li><br />          </ul><br />          <div class="login-or">ou</div><br />          <div class="button-box"><br />            <p id="warning"><br />              <span></span><br />            </p><br />            <ul><br />              <br />                <li><br />                  <div class="thirdpart-login-button-wapper"><br />                    <a class="thirdpart-login-button" href="/login/google/"><br />                      <div class="g-signin2" data-onsuccess="onSuccess" data-gapiscan="true" data-onload="true"><br />                        <div class="abcRioButton abcRioButtonLightBlue"><br />                          <div class="abcRioButtonContentWrapper"><br />                            <div class="abcRioButtonIcon"><br />                              <div class="abcRioButtonSvgImageWithFallback abcRioButtonIconImage abcRioButtonIconImage18"><br />                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 48 48" class="abcRioButtonSvg"><g><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></g></svg><br />                              </div><br />                            </div><br />                            <span class="abcRioButtonContents"><br />                              <span id="not_signed_inpl409na6refd">Se connecter avec Google</span><br />                              <span id="connectedpl409na6refd">Signed in</span><br />                            </span><br />                          </div><br />                        </div><br />                      </div><br />                    </a><br />                  </div><br />                </li><br />              <br />              <br />                <li><br />                  <div class="thirdpart-login-button-wapper"><br />                    <a class="thirdpart-login-button" href="/login/ms/"><br />                      <div class="g-signin2" data-onsuccess="onSuccess" data-gapiscan="true" data-onload="true"><br />                        <div class="abcRioButton abcRioButtonLightBlue"><br />                          <div class="abcRioButtonContentWrapper"><br />                            <div class="abcRioButtonIcon"><br />                              <div class="abcRioButtonSvgImageWithFallback abcRioButtonIconImage abcRioButtonIconImage18"><br />                                <svg width="18" height="18" viewBox="0 0 18 18" class="abcRioButtonSvg"><br />                                  <rect x="0" y="1" width="8" height="8" fill="#f25022" /><br />                                  <rect x="0" y="10" width="8" height="8" fill="#00a4ef" /><br />                                  <rect x="9" y="1" width="8" height="8" fill="#7fba00" /><br />                                  <rect x="9" y="10" width="8" height="8" fill="#ffb900" /><br />                                </svg><br />                              </div><br />                            </div><br />                            <span class="abcRioButtonContents"><br />                              <span id="not_signed_inpl409na6refd">Se connecter avec Microsoft</span><br />                            </span><br />                          </div><br />                        </div><br />                      </div><br />                    </a><br />                  </div><br />                </li><br />              <br />              <br />            </ul><br />          </div><br />      <br />      </div><br />    <br />  <br /></div><br /><br /><br />      </div><br />    </div><br />    <br />    <div class="footer-text"><br />      © Gino Legaltech 2022 Tous droits réservés<br />    </div> <br />    <br />  </div><br />    <script type="text/javascript" src="/fr/jsi18n/"></script><br />    <script type="text/javascript" src="/static/desk/js/base_login.js?v=master-b2027d8:master-56c6dc8"></script><br /></body><br /></htmL><br /><br />
+</td>
+        </tr>
+        <tr class='info' status='info'>
+            <td class='status info' title='info' alt='info'><i
+                    class='material-icons'>low_priority</i></td>
+            <td class='timestamp'>screenshot</td>
+            <td class='step-details'>
+            </td>
+        </tr>
+    
+                        </tbody>
+                    </table>
+                 </div>
+             </div>
+            </li>
+    
+            <li class="node level-1 leaf pass" status="pass" test-id="test_case_2_登录post: test_case_2_登录post_pt1.2_1">
+            <div class='collapsible-header'>
+                <div class='node-name'>test_case_2_登录post</div>
+                <span class='node-time'>desc: test_case_2_登录post</span>
+                <span class="test-status right pass">pass</span>
+            </div>
+            <div class='collapsible-body'>
+                <div class='category-list right'>
+                    <span class='category label white-text'>test_case_2_登录post</span>
+                </div>
+                <div class='node-steps'>
+                    <table class='bordered table-results'>
+                        <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Identity</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        
+        <tr class='info' status='info'>
+            <td class='status info' title='info' alt='info'><i
+                    class='material-icons'>low_priority</i></td>
+            <td class='timestamp'>stdo</td>
+            <td style="white-space:pre-wrap;word-break:break-all">
+0: <br />---用例请求参数---<br /> <br />用例名:登录post <br />URL:https://ovh.ginolegaltech.com/user/login/ <br />Method: POST <br />Header: {'header_key': 'Referer', 'header_value': 'https://ovh.ginolegaltech.com/user/login/'} <br />param_type: data <br />Body: {'csrfmiddlewaretoken': 'GNDz3nrPyTgP2BWKkXenZwL4wBRrdXtHSnNjUWGCtvjRaoqwooGQ87UaayNY5dSg', 'username': 'test-one@ginolegaltechbot.cn', 'password': 'Gino345678...', 'next': ''} <br />---用例响应数据---<br /> <br />响应头:{'Date': 'Mon, 10 Jan 2022 11:02:30 GMT', 'Content-Type': 'text/html; charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Vary': 'Accept-Encoding, Accept-Language, Cookie, Origin', 'Content-Security-Policy': "connect-src 'self'; script-src https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ appsforoffice.microsoft.com cdnjs.cloudflare.com netdna.bootstrapcdn.com cdn.polyfill.io 'self'; img-src ginopublic.blob.core.windows.net blob: 'self'; worker-src blob:; default-src 'none'; font-src fonts.gstatic.com static2.sharepointonline.com spoprod-a.akamaihd.net cdnjs.cloudflare.com 'self'; style-src fonts.googleapis.com spoprod-a.akamaihd.net cdnjs.cloudflare.com 'self'; frame-src https://www.google.com/recaptcha/ 'self'", 'X-Frame-Options': 'SAMEORIGIN', 'Content-Language': 'fr', 'Access-Control-Allow-Headers': 'Authorization, Content-Type, Accept, Origin, User-Agent, DNT, Cache-Control, X-Mx-ReqToken, X-Requested-With, GinoAddinToken, X_AUTH_TOKEN, ginoaddintoken', 'Cache-Control': 'no-cache, no-store, must-revalidate, private, max-age=0', 'Pragma': 'no-cache', 'X-XSS-Protection': '1; mode=block', 'X-Content-Type-Options': 'nosniff', 'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload', 'Content-Encoding': 'gzip'} <br />响应码： 403 <br />响应内容： <br /><!DOCTYPE html><br /><html lang="en"><br /><head><br />  <meta http-equiv="content-type" content="text/html; charset=utf-8"><br />  <meta name="robots" content="NONE,NOARCHIVE"><br />  <title>403 Forbidden</title><br />  <style type="text/css"><br />    html * { padding:0; margin:0; }<br />    body * { padding:10px 20px; }<br />    body * * { padding:0; }<br />    body { font:small sans-serif; background:#eee; color:#000; }<br />    body>div { border-bottom:1px solid #ddd; }<br />    h1 { font-weight:normal; margin-bottom:.4em; }<br />    h1 span { font-size:60%; color:#666; font-weight:normal; }<br />    #info { background:#f6f6f6; }<br />    #info ul { margin: 0.5em 4em; }<br />    #info p, #summary p { padding-top:10px; }<br />    #summary { background: #ffc; }<br />    #explanation { background:#eee; border-bottom: 0px none; }<br />  </style><br /></head><br /><body><br /><div id="summary"><br />  <h1>Interdit <span>(403)</span></h1><br />  <p>La vérification CSRF a échoué. La requête a été interrompue.</p><br /><br /><br />  <p>Vous voyez ce message parce que ce site exige la présence d’un cookie CSRF lors de l’envoi de formulaires. Ce cookie est nécessaire pour des raisons de sécurité, afin de s’assurer que le navigateur n’ait pas été piraté par un intervenant externe.</p><br />  <p>Si vous avez désactivé l’envoi des cookies par votre navigateur, veuillez les réactiver au moins pour ce site ou pour les requêtes de même origine (« same-origin »).</p><br /><br /></div><br /><br /><div id="info"><br />  <h2>Help</h2><br />    <br />    <p>Reason given for failure:</p><br />    <pre><br />    CSRF cookie not set.<br />    </pre><br />    <br /><br />  <p>In general, this can occur when there is a genuine Cross Site Request Forgery, or when<br />  <a<br />  href="https://docs.djangoproject.com/en/3.1/ref/csrf/">Django's<br />  CSRF mechanism</a> has not been used correctly.  For POST forms, you need to<br />  ensure:</p><br /><br />  <ul><br />    <li>Your browser is accepting cookies.</li><br /><br />    <li>The view function passes a <code>request</code> to the template's <a<br />    href="https://docs.djangoproject.com/en/dev/topics/templates/#django.template.backends.base.Template.render"><code>render</code></a><br />    method.</li><br /><br />    <li>In the template, there is a <code>{% csrf_token<br />    %}</code> template tag inside each POST form that<br />    targets an internal URL.</li><br /><br />    <li>If you are not using <code>CsrfViewMiddleware</code>, then you must use<br />    <code>csrf_protect</code> on any views that use the <code>csrf_token</code><br />    template tag, as well as those that accept the POST data.</li><br /><br />    <li>The form has a valid CSRF token. After logging in in another browser<br />    tab or hitting the back button after a login, you may need to reload the<br />    page with the form, because the token is rotated after a login.</li><br />  </ul><br /><br />  <p>You're seeing the help section of this page because you have <code>DEBUG =<br />  True</code> in your Django settings file. Change that to <code>False</code>,<br />  and only the initial error message will be displayed.  </p><br /><br />  <p>You can customize this page using the CSRF_FAILURE_VIEW setting.</p><br /></div><br /><br /></body><br /></html><br /><br />
+</td>
+        </tr>
+        <tr class='info' status='info'>
+            <td class='status info' title='info' alt='info'><i
+                    class='material-icons'>low_priority</i></td>
+            <td class='timestamp'>screenshot</td>
+            <td class='step-details'>
+            </td>
+        </tr>
+    
+                        </tbody>
+                    </table>
+                 </div>
+             </div>
+            </li>
+    
+        </ul>
+    </div>
+    
+                </ul>
+            </div>
+    </div>            
+    
+        
+        <div class='subview-right left'>
+            <div class='view-summary'>
+                <h5 class='test-name'></h5>
+
+                <div id='step-filters' class="right">
+                    <span class="blue-text" status="info" alt="info" title="info"><i
+                            class="material-icons">info_outline</i></span>
+                    <span class="green-text" status="pass" alt="pass" title="pass"><i class="material-icons">check_circle</i></span>
+                    <span class="red-text" status="fail" alt="fail" title="fail"><i
+                            class="material-icons">cancel</i></span>
+                    <span class="red-text text-darken-4" status="fatal" alt="fatal" title="fatal"><i
+                            class="material-icons">cancel</i></span>
+                    <span class="pink-text text-lighten-1" status="error" alt="error" title="error"><i
+                            class="material-icons">error</i></span>
+                    <span class="orange-text" alt="warning" status="warning" title="warning"><i
+                            class="material-icons">warning</i></span>
+                    <span class="teal-text" status="skip" alt="skip" title="skip"><i
+                            class="material-icons">redo</i></span>
+                    <span status="clear" alt="Clear filters" title="Clear filters"><i
+                            class="material-icons">clear</i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id='category-view' class='view hide'>
+        <section id='controls'>
+            <div class='controls grey lighten-4'>
+                <!-- search -->
+                <div class='chip transparent' alt='Search Tests' title='Search Tests'>
+                    <a href="#" class='search-div'>
+                        <i class='material-icons'>search</i> Search
+                    </a>
+    
+                    <div class='input-field left hide'>
+                        <input tyle="color: red;" id='search-tests' type='text'
+                               class='validate browser-default'
+                               placeholder='Search Tests...'>
+                    </div>
+    
+                </div>
+                <!-- search -->
+            </div>
+        </section>
+        
+        <div class='subview-left left'>
+
+            <div class='view-summary'>
+                <h5>Categories</h5>
+                <ul id='category-collection' class='category-collection'>
+
+                    <li class='category displayed active'>
+                        <div class='category-heading'>
+                            <span class='category-name'>All Suites</span>
+                            <span class='category-status right'>
+                                <span class='label pass'>2 </span>
+                                <span class='label fail'>0</span>
+                            </span>
+                        </div>
+                        <div class='category-content hide'>
+                            <div class='category-status-counts'>
+                                <span class='label green accent-4 white-text'>Passed: 2</span>
+                                <span class='label red lighten-1 white-text'>Failed: 0</span>
+                                <span class='label blue lighten-1 white-text'>Errored: 0</span>
+                                <span class="label yellow darken-2 white-text">Skipped: </span>
+                            </div>
+
+                            <div class='category-tests'>
+                                <table class='bordered table-results'>
+                                    <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>TestName</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    ['\n    <tr style="border: 1px solid #49cc90; background-color: rgba(73, 204, 144, .1)">\n        <td>2022-01-10 19:02:29.348940</td>\n        <td class=\'linked\' test-id=\'ApiTest_0\'>ApiTest</td>\n        <td><span class="test-status pass">pass</span></td>\n    </tr>\n    <tr>\n        <td></td>\n        <td class=\'linked\' test-id=\'暂未处理\'></td>\n        <td><span class="test-status pass">pass</span></td>\n    </tr>\n        \n    ']
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </li>
+                    ["\n    <li class='category displayed active'>\n        <div class='category-heading'>\n            <span class='category-name'>ApiTest</span>\n            <span class='category-status right'>\n                <span class='label pass'>2 </span>\n                <span class='label fail'>0</span>\n            </span>\n        </div>\n        <div class='category-content hide'>\n            <div class='category-status-counts'>\n                <span class='label green accent-4 white-text'>Passed: 2</span>\n                <span class='label red lighten-1 white-text'>Failed: 0</span>\n                <span class='label blue lighten-1 white-text'>Errored: 0</span>\n            </div>\n\n            <div class='category-tests'>\n                <table class='bordered table-results'>\n                    <thead>\n                    <tr>\n                        <th>Timestamp</th>\n                        <th>TestName</th>\n                        <th>Status</th>\n                    </tr>\n                    </thead>\n                    <tbody>\n                    \n                    </tbody>\n                </table>\n            </div>\n        </div>\n    </li>\n    "]
+                <div class='subview-right left'>
+            <div class='view-summary'>
+                <h5 class='category-name'></h5>
+            </div>
+        </div>
+    </div>
+                    
+        
+    
+    
+
+    
+    <div id='dashboard-view' class='view hide'>
+        <div class='card-panel transparent np-v'>
+            <h5>Dashboard</h5>
+
+            <div class='row'>
+                <div class='col s2'>
+                    <div class='card-panel r'>
+                        Pass
+                        <div class='panel-lead'>2</div>
+                    </div>
+                </div>
+                <div class='col s2'>
+                    <div class='card-panel r'>
+                        Fail
+                        <div class='panel-lead'>0</div>
+                    </div>
+                </div>
+                <div class='col s2'>
+                    <div class='card-panel r'>
+                        Error
+                        <div class='panel-lead'>0</div>
+                    </div>
+                </div>
+                <div class='col s2'>
+                    <div class='card-panel r'>
+                        Skip
+                        <div class='panel-lead'></div>
+                    </div>
+                </div>
+                <div class='col s2'>
+                    <div class='card-panel r'>
+                        Start
+                        <div class='panel-lead'>2022-01-10 19:02:29</div>
+                    </div>
+                </div>
+                <div class='col s2'>
+                    <div class='card-panel r'>
+                        Time Taken
+                        <div class='panel-lead'>0:00:01.725507 seconds</div>
+                    </div>
+                </div>
+                <div class='col s4'>
+                    <div class='card-panel'>
+                        <span class='right label cyan white-text'>Categories</span>
+                        <p>&nbsp;</p>
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Passed</th>
+                                <th>Failed</th>
+                                <th>Errored</th>
+                                <th>Skipped</th>
+                            </tr>
+                            <tr>
+                                <td>All Suites</td>
+                                <td class="pass">2</td>
+                                <td class="fail">0</td>
+                                <td class="error">0</td>
+                                <td class="skip"></td>
+                            </tr>
+
+                                <tr>
+                                    <td id="unknown"></td>
+                                    <td class="pass"></td>
+                                    <td class="fail"></td>
+                                    <td class="error"></td>
+                                    <td class="skip"></td>
+                                </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+    
+</body>
+
+    <script>
+        var test_suite_success = 2;
+        
+    
+        var statusGroup = {
+            passParent: 2,
+            failParent: 0,
+            fatalParent: 0,
+            errorParent: 0,
+            warningParent: 0,
+            skipParent: 0,
+            exceptionsParent: 0,
+    
+            passChild: test_suite_success,
+            failChild: 0,
+            fatalChild: 0,
+            errorChild: 0,
+            warningChild: 0,
+            skipChild: 0,
+            infoChild: 0,
+            exceptionsChild: 0,
+    
+            passGrandChild: 0,
+            failGrandChild: 0,
+            fatalGrandChild: 0,
+            errorGrandChild: 0,
+            warningGrandChild: 0,
+            skipGrandChild: 0,
+            infoGrandChild: 0,
+            exceptionsGrandChild: 0,
+        };
+    
+    </script>
+    
+    <script src='http://extentreports.com/resx/dist/js/extent.js' type='text/javascript'></script>
+    
+    
+    <script type='text/javascript'>
+        $(window).off("keydown");
+    </script>
+    
+</html>

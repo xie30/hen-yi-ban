@@ -291,7 +291,7 @@ def edit_case(request):
     if request.method == "POST":
         req = json.loads(request.body)
         case_info = CaseList.objects.values().filter(id=req["id"])
-        print(case_info)
+        # print(case_info)
         case_info = deal_data(case_info)["data"][0]
         re_header = ast.literal_eval(case_info["re_header"])
         # print(re_header, type(re_header))
@@ -303,7 +303,7 @@ def edit_case(request):
             case_info["include"] = 'None'
         case_info["re_header"] = re_header
         # case_info["suite"] =
-        print(case_info)
+        # print(case_info)
         return JsonResponse(case_info)
 
 
