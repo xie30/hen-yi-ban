@@ -55,10 +55,15 @@ class ApiTest(unittest.TestCase):
             print("请求方法错误")
 
     def stdo(self, r, kwargs):
-        print("\n---用例请求参数---\n", "\n用例名:" + kwargs.get('name'), "\nURL:" + kwargs.get('url'), "\nMethod:",
-              kwargs.get('method'), "\nHeader:", kwargs.get('header'), "\nparam_type:", kwargs.get('param_type'),
-              "\nBody:", kwargs.get('body'), "\n---用例响应数据---\n", "\n响应头:" + str(r.headers),
-              "\n响应码：", r.status_code, "\n响应内容：", r.text)
+        # print("\n---用例请求参数---\n", "\n用例名:" + kwargs.get('name'), "\nURL:" + kwargs.get('url'), "\nMethod:",
+        #       kwargs.get('method'), "\nHeader:", kwargs.get('header'), "\nparam_type:", kwargs.get('param_type'),
+        #       "\nBody:", kwargs.get('body'), "\n---用例响应数据---\n", "\n响应头:" + str(r.headers),
+        #       "\n响应码：", r.status_code, "\n响应内容：", r.text)
+        print("\n---用例请求参数---\n, \n用例名:{}, \nURL:{}, \nMethod:{}, \nHeader:{}, \nparam_type:{},\nBody:{},"
+              "\n---用例响应数据---\n, \n响应头:{},\n响应码：{}, \n响应内容：{}".format(kwargs.get('name'),
+                                                                      kwargs.get('url'), kwargs.get('method')),
+              kwargs.get('header'), kwargs.get('param_type'),
+              kwargs.get('body'), str(r.headers), r.status_code, r.text)
 
     def getRelyData(self, dict_data):
         for k, v in dict_data.items():
@@ -67,7 +72,6 @@ class ApiTest(unittest.TestCase):
                 value = getattr(RelyData, key)
                 dict_data[k] = value
         return dict_data
-
 
     # def create_suite(self, dirs):
     #     #     print(dirs)
